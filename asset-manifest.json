@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/static/css/main.21eaf4ed.chunk.css",
-    "main.js": "/static/js/main.2af96a3e.chunk.js",
-    "main.js.map": "/static/js/main.2af96a3e.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.879b4333.js",
-    "runtime-main.js.map": "/static/js/runtime-main.879b4333.js.map",
-    "static/css/2.e43d3303.chunk.css": "/static/css/2.e43d3303.chunk.css",
-    "static/js/2.acfec6d0.chunk.js": "/static/js/2.acfec6d0.chunk.js",
-    "static/js/2.acfec6d0.chunk.js.map": "/static/js/2.acfec6d0.chunk.js.map",
-    "index.html": "/index.html",
-    "static/css/2.e43d3303.chunk.css.map": "/static/css/2.e43d3303.chunk.css.map",
-    "static/css/main.21eaf4ed.chunk.css.map": "/static/css/main.21eaf4ed.chunk.css.map",
-    "static/js/2.acfec6d0.chunk.js.LICENSE.txt": "/static/js/2.acfec6d0.chunk.js.LICENSE.txt"
+    "main.css": "/home-climate-monitor/static/css/main.21eaf4ed.chunk.css",
+    "main.js": "/home-climate-monitor/static/js/main.2af96a3e.chunk.js",
+    "main.js.map": "/home-climate-monitor/static/js/main.2af96a3e.chunk.js.map",
+    "runtime-main.js": "/home-climate-monitor/static/js/runtime-main.55988cd9.js",
+    "runtime-main.js.map": "/home-climate-monitor/static/js/runtime-main.55988cd9.js.map",
+    "static/css/2.e43d3303.chunk.css": "/home-climate-monitor/static/css/2.e43d3303.chunk.css",
+    "static/js/2.acfec6d0.chunk.js": "/home-climate-monitor/static/js/2.acfec6d0.chunk.js",
+    "static/js/2.acfec6d0.chunk.js.map": "/home-climate-monitor/static/js/2.acfec6d0.chunk.js.map",
+    "index.html": "/home-climate-monitor/index.html",
+    "static/css/2.e43d3303.chunk.css.map": "/home-climate-monitor/static/css/2.e43d3303.chunk.css.map",
+    "static/css/main.21eaf4ed.chunk.css.map": "/home-climate-monitor/static/css/main.21eaf4ed.chunk.css.map",
+    "static/js/2.acfec6d0.chunk.js.LICENSE.txt": "/home-climate-monitor/static/js/2.acfec6d0.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.879b4333.js",
+    "static/js/runtime-main.55988cd9.js",
     "static/css/2.e43d3303.chunk.css",
     "static/js/2.acfec6d0.chunk.js",
     "static/css/main.21eaf4ed.chunk.css",
