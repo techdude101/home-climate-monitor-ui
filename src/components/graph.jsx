@@ -5,16 +5,18 @@ import LineChart from './line-chart';
 class Graph extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      data: this.props.data,
-      temperatures: this.props.data.map(d => d.temperature),
-      humidity: this.props.data.map(d => d.humidity),
-      timestamps: this.props.data.map(d => d.timestamp)
+    if (Array.isArray(this.props.data)) {
+      this.state = {
+        data: this.props.data,
+        temperatures: this.props.data.map(d => d.temperature),
+        humidity: this.props.data.map(d => d.humidity),
+        timestamps: this.props.data.map(d => d.timestamp)
+      }
     }
   }
 
   componentDidUpdate(previousProps, previousState) {
-    if (previousProps.data !== this.props.data) {
+    if (previousProps.data !== this.props.data && Array.isArray(this.props.data)) {
       const temperatures = this.props.data.map(d => d.temperature);
       const humidity = this.props.data.map(d => d.humidity);
       const timestamps = this.props.data.map(d => d.timestamp);
@@ -31,15 +33,19 @@ class Graph extends Component {
       <div className="row">
         <div className="col s12 m12 l12">
           <div className="card blue-grey darken-1">
+            <div className="card-title white-text center-align hide-on-large-only">
+              {this.props.title}
+            </div>
             <div className="card-content white-text">
-            <LineChart
-                    labelLeft="Temperature (℃)"
-                    labelRight="Humidity (%)"
-                    xData={this.state.timestamps}
-                    yDataLeft={this.state.temperatures}
-                    yDataRight={this.state.humidity}
-                    title={" "}
-                />
+              {this.state !== null ? 
+              <LineChart
+                labelLeft="Temperature (℃)"
+                labelRight="Humidity (%)"
+                xData={this.state.timestamps}
+                yDataLeft={this.state.temperatures}
+                yDataRight={this.state.humidity}
+                title={" "}
+              /> : ""}
             </div>
           </div>
         </div>

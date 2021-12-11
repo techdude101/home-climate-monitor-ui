@@ -5,7 +5,8 @@ import Card from './card';
 class Cards extends Component {
   getDeviceDescription = (serial) => {
     const result = this.props.devices.filter(d => serial === d.serial);
-    return result[0].description;
+    // return result[0].description;
+    return result.length !== 0 ? result[0].description : "";
   }
 
   deviceCard = () => {
@@ -14,8 +15,8 @@ class Cards extends Component {
     return  this.props.readings.map((device) => {
       if (device[0] !== undefined) {
       return <Card
-      key={device[0].device_id}
-      title={this.getDeviceDescription(device[0].device_id)}
+      key={device[0].serial}
+      title={this.getDeviceDescription(device[0].serial)}
       humidity={device[0].humidity}
       temperature={device[0].temperature}
       date={device[0].timestamp} />

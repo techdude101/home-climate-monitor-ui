@@ -51,3 +51,18 @@
   max-height: 2.5ch;
   filter: invert(100%); /* Black to white */
 }
+
+.burger {
+  display: inline-block;
+  cursor: pointer;
+  position: absolute;
+  top: 1em;
+  right: 0;
+}
+
+.burger div {
+  width: 25px;
+  height: 3px;
+  background-color: rgb(226, 226, 226);
+  margin: 5px;
+}
