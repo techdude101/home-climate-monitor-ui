@@ -27,13 +27,15 @@ class LineChart extends React.Component {
   }
 
   componentDidMount() {
-    const minY1 = Math.round(this.getMinOfArray(this.props.yDataLeft) - 1);
-    const maxY1 = Math.round(this.getMaxOfArray(this.props.yDataLeft) + 1);
+    const minY1 = Math.floor(this.getMinOfArray(this.props.yDataLeft));
+    const maxY1 = Math.ceil(this.getMaxOfArray(this.props.yDataLeft));
 
     const minY2 = Math.round(this.getMinOfArray(this.props.yDataRight) - 1);
     const maxY2 = Math.round(this.getMaxOfArray(this.props.yDataRight) + 1);
 
     this.setState({
+      minY1: minY1,
+      maxY1: maxY1,
       options: {
         color: '#FFF',
         elements: {
@@ -65,7 +67,7 @@ class LineChart extends React.Component {
             max: maxY2,
             ticks: {
               display: true,
-              stepSize: 0.5,
+              stepSize: 1,
               color: 'rgba(255, 255, 255, 0.7)',
             }
           },
@@ -125,7 +127,7 @@ class LineChart extends React.Component {
               autorange: "false",
               type: 'date',
             },
-            yaxis: { title: 'Temperature (&deg;C)', automargin: true },
+            yaxis: { title: 'Temperature (&deg;C)', automargin: true, range: [this.state.minY1, this.state.maxY1] },
             yaxis2: {
               title: 'Humidity (%)',
               range: [0, 100],
