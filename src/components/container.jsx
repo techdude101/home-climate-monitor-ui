@@ -25,10 +25,16 @@ class Container extends Component {
   }
 
   async handleChangeDevice(e) {
+    let device = null;
+    if (e.hasOwnProperty('target')) {
+      device = e.target.text;
+    } else {
+      device = e;
+    }
     // Check if the target device is different
-    if (e.target.text === this.state.selected_device.description) return;
+    if (device === this.state.selected_device.description) return;
     // Update new selected device
-    let new_selected_device = this.state.devices.filter(d => d.description === e.target.text);
+    let new_selected_device = this.state.devices.filter(d => d.description === device);
     // Retrieve data from device
     if (new_selected_device.length !== 0) {
       // Array.filter returns array - get first element in the array
@@ -92,7 +98,7 @@ class Container extends Component {
     return (
       <div>
         <div className="row margin-none">
-          <div className="hide-on-med-and-up center-align">
+          <div className="hide hide-on-med-and-up center-align">
             <h1 className="white-text margin-none header-title">Dashboard</h1>
             <div className="burger" onClick={this.handleBurger}>
               <div></div>
@@ -119,7 +125,11 @@ class Container extends Component {
           </div>
           <div className="col s12 m12 l10 blue-grey darken-2 min-height-100vh">
             {this.state.last_readings != null ?
-              <Cards readings={this.state.last_readings} devices={this.state.devices} />
+              <Cards 
+              selectedDevice={this.state.selected_device != null ? this.state.selected_device.description : null} 
+              readings={this.state.last_readings} 
+              devices={this.state.devices} 
+              clickHandler={this.handleChangeDevice} />
               : ""}
             {this.state.device_data != null && this.state.device_data !== undefined && this.state.device_data.length > 1 ?
               <Graph data={this.state.device_data} title={this.state.selected_device.description} />

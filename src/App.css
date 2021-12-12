@@ -52,6 +52,8 @@
   filter: invert(100%); /* Black to white */
 }
 
+.card-pointer { cursor: pointer; }
+
 .burger {
   display: inline-block;
   cursor: pointer;

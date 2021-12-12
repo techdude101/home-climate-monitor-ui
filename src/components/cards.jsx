@@ -3,6 +3,15 @@ import React, { Component } from 'react';
 import Card from './card';
 
 class Cards extends Component {
+  constructor(props){
+    super(props);
+    this.clickHandler = this.clickHandler.bind(this);
+  }
+
+  clickHandler(e) {
+    this.props.clickHandler(e);
+  }
+
   getDeviceDescription = (serial) => {
     const result = this.props.devices.filter(d => serial === d.serial);
     // return result[0].description;
@@ -19,7 +28,9 @@ class Cards extends Component {
       title={this.getDeviceDescription(device[0].serial)}
       humidity={device[0].humidity}
       temperature={device[0].temperature}
-      date={device[0].timestamp} />
+      date={device[0].timestamp} 
+      clickHandler={this.clickHandler} 
+      selected={this.props.selectedDevice === this.getDeviceDescription(device[0].serial)} />
       } else { return "" }
     });
   }

@@ -2,6 +2,15 @@ import React, { Component } from 'react';
 
 
 class Card extends Component {
+  constructor(props) {
+    super(props);
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick(e) {
+    this.props.clickHandler(this.props.title);
+  }
+
   formatDate(date) {
     // Get user locale from browser
     const locale = navigator.language;
@@ -11,8 +20,8 @@ class Card extends Component {
   render() {
     return (
       <div className="col s12 m5 l3">
-        <div className="card blue-grey darken-4">
-          <div className="card blue-grey darken-4">
+        <div className={`card card-pointer blue-grey ${this.props.selected ? "darken-3" : "darken-4"}`} onClick={this.handleClick}>
+          <div className={`card grey ${this.props.selected ? "darken-3" : "darken-4"}`}>
             <div className="card-content white-text">
               <span className="card-span">{this.props.title ? this.props.title : "Title"}</span>
               <span className="card-title">{this.props.temperature ? this.props.temperature + "\u00b0C" : "Temperature Error"}</span>
