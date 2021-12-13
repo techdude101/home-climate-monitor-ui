@@ -85,6 +85,17 @@ class LineChart extends React.Component {
     });
   }
 
+  componentDidUpdate(previousProps, previousState) {
+    if (previousProps.yDataLeft !== this.props.yDataLeft) {
+      const minY1 = Math.floor(this.getMinOfArray(this.props.yDataLeft));
+      const maxY1 = Math.ceil(this.getMaxOfArray(this.props.yDataLeft));
+      this.setState({
+        minY1: minY1,
+        maxY1: maxY1
+      })
+    }
+  }
+
   render() {
     return (
         <Plot
