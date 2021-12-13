@@ -107,7 +107,7 @@ class Container extends Component {
             </div>
             <ul className="mobileNav">
               {this.state.devices != null ? this.state.devices.map(device => {
-                return <li key={device.serial}><a onClick={this.handleChangeDevice} className="waves-effect waves-light btn grey darken-2 sidebar-links">{device.description}</a></li>
+                return <li key={device.serial}><button onClick={this.handleChangeDevice} className="waves-effect waves-light btn grey darken-2 sidebar-links">{device.description}</button></li>
               }) : ""}
             </ul>
           </div>

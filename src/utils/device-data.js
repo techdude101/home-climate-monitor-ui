@@ -15,7 +15,7 @@ export const getData = async (device_serial, start=new Date(), end=new Date()) =
   return data.data;
 };
 
-export async function fetchData(url, timeout=4000) {
+export async function fetchData(url, timeout=10000) {
   try {
     return await axios({
       method: 'get',

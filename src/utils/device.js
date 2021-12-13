@@ -7,7 +7,7 @@ export const getDevices = async () => {
   return data.hasOwnProperty('data') ? data.data : [];
 };
 
-export async function fetchData(url, timeout=4000) {
+export async function fetchData(url, timeout=10000) {
   try {
     return await axios({
       method: 'get',
