@@ -101,29 +101,38 @@ class Container extends Component {
   }
 
   displayGraphs() {
-    return <>
-      {this.state.last_readings != null ?
-        <Cards
-          selectedDevice={this.state.selected_device != null ? this.state.selected_device.description : null}
-          readings={this.state.last_readings}
-          devices={this.state.devices}
-          clickHandler={this.handleChangeDevice} />
-        : ""}
-      {this.state.device_data != null && this.state.device_data !== undefined && this.state.device_data.length > 1 ?
-        <Graph data={this.state.device_data} title={this.state.selected_device.description} />
-        : ""}
-    </>
+    if (this.state.device_data != null && this.state.device_data !== undefined) {
+      if (this.state.device_data.length === 0) {
+        // If no data is available display "no data"
+        return <h1 className="white-text center-align">No Data</h1>
+      } else {
+        // Display a graph if data is available
+        return <Graph data={this.state.device_data} title={this.state.selected_device.description} />
+      }
+    }
+  }
+
+  displayCards() {
+    if (this.state.last_readings != null) {
+      return <Cards
+        selectedDevice={this.state.selected_device != null ? this.state.selected_device.description : null}
+        readings={this.state.last_readings}
+        devices={this.state.devices}
+        clickHandler={this.handleChangeDevice} />
+    }
+    else return null;
   }
 
   toggleAddDevice() {
     const addDevice = this.state.add_device;
-    this.setState({add_device: !addDevice});
+    this.setState({ add_device: !addDevice });
   }
 
   render() {
     return (
       <div>
         <div className="row margin-none">
+          {/* Only show on mobile */}
           <div className="hide hide-on-med-and-up center-align">
             <h1 className="white-text margin-none header-title">Dashboard</h1>
             <div className="burger" onClick={this.handleBurger}>
@@ -134,11 +143,13 @@ class Container extends Component {
             <ul className="mobileNav">
               {this.state.devices != null ? this.state.devices.map(device => {
                 return <li key={device.serial}><button onClick={this.handleChangeDevice} className="waves-effect waves-light btn grey darken-2 sidebar-links">{device.description}</button></li>
-              }) : ""}
+              }) : null}
               <li><button className="waves-effect waves-light btn grey darken-2 sidebar-links"
                 onClick={this.toggleAddDevice}>{this.state.add_device ? "Show Graphs" : "Add Device"}</button></li>
             </ul>
           </div>
+          {/* End only show on mobile */}
+          {/* Sidebar - only display on tablets and larger screens */}
           <div className="col s12 m4 l2 blue-grey darken-3 min-height-100 hide-on-med-and-down">
             <div className="section white-text text-center">
               <h1 className="white-text sidebar-title">Graphs</h1>
@@ -147,7 +158,7 @@ class Container extends Component {
               <ul>
                 {this.state.devices != null ? this.state.devices.map(device => {
                   return <li key={device.serial}><button onClick={this.handleChangeDevice} className="waves-effect waves-light btn grey darken-2 sidebar-links">{device.description}</button></li>
-                }) : ""}
+                }) : null}
                 <div className="divider"></div>
                 <li><button className="waves-effect waves-light btn green darken-4 sidebar-links"
                   onClick={this.toggleAddDevice}>{this.state.add_device ? "Show Graphs" : "Add Device"}</button></li>
@@ -155,6 +166,7 @@ class Container extends Component {
             </div>
           </div>
           <div className="col s12 m12 l10 blue-grey darken-2 min-height-100vh">
+            {this.displayCards()}
             {this.state.add_device ?
               <AddDevice />
               :

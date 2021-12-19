@@ -52,6 +52,12 @@
   filter: invert(100%); /* Black to white */
 }
 
+.card-warning-icon {
+  font-size: 1.5em;
+  margin: 1em;
+  float: right;
+}
+
 .card-pointer { cursor: pointer; }
 
 .burger {

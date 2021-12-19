@@ -6,6 +6,24 @@ class Card extends Component {
     super(props);
     this.handleClick = this.handleClick.bind(this);
   }
+  dateToUTC(d) {
+    return Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate(), d.getUTCHours(), d.getUTCMinutes(), d.getUTCSeconds());
+  }
+
+  // Check if last reading was over 1 hour ago
+  lastReadingWarning() {
+    const reading = new Date(this.props.date);
+    const readingUTC = this.dateToUTC(reading);
+    const now = new Date();
+    const nowUTC = this.dateToUTC(now);
+    const difference = (nowUTC - readingUTC) / 1000; // seconds
+    
+    // 60 seconds * 60 minutes
+    if (difference > (60 * 60)) {
+      return true;
+    }
+    return false;
+  }
 
   handleClick(e) {
     this.props.clickHandler(this.props.title);
@@ -24,10 +42,11 @@ class Card extends Component {
           <div className={`card grey ${this.props.selected ? "darken-3" : "darken-4"}`}>
             <div className="card-content white-text">
               <span className="card-span">{this.props.title ? this.props.title : "Title"}</span>
+              {this.lastReadingWarning() ? <span className="card-warning-icon"><i className="material-icons yellow-text">warning</i></span> : null }
               <span className="card-title">{this.props.temperature ? this.props.temperature + "\u00b0C" : "Temperature Error"}</span>
               <p className="card-span">{this.props.humidity ? this.props.humidity + "%" : <br />}</p>
               <div className="divider"></div>
-              <span className="card-span">{this.props.date ? this.formatDate(this.props.date) : "Date Error"}</span>
+              <span className={`card-span ${this.lastReadingWarning() && "red-text"}`}>{this.props.date ? this.formatDate(this.props.date) : "Date Error"}</span>
             </div>
           </div>
         </div>
