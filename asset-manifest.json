@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "/home-climate-monitor/static/css/main.265fb1d7.chunk.css",
-    "main.js": "/home-climate-monitor/static/js/main.18fa4022.chunk.js",
-    "main.js.map": "/home-climate-monitor/static/js/main.18fa4022.chunk.js.map",
+    "main.css": "/home-climate-monitor/static/css/main.8f089024.chunk.css",
+    "main.js": "/home-climate-monitor/static/js/main.490efc57.chunk.js",
+    "main.js.map": "/home-climate-monitor/static/js/main.490efc57.chunk.js.map",
     "runtime-main.js": "/home-climate-monitor/static/js/runtime-main.55988cd9.js",
     "runtime-main.js.map": "/home-climate-monitor/static/js/runtime-main.55988cd9.js.map",
     "static/css/2.e43d3303.chunk.css": "/home-climate-monitor/static/css/2.e43d3303.chunk.css",
-    "static/js/2.2a93d93f.chunk.js": "/home-climate-monitor/static/js/2.2a93d93f.chunk.js",
-    "static/js/2.2a93d93f.chunk.js.map": "/home-climate-monitor/static/js/2.2a93d93f.chunk.js.map",
+    "static/js/2.9312ae2c.chunk.js": "/home-climate-monitor/static/js/2.9312ae2c.chunk.js",
+    "static/js/2.9312ae2c.chunk.js.map": "/home-climate-monitor/static/js/2.9312ae2c.chunk.js.map",
     "index.html": "/home-climate-monitor/index.html",
     "static/css/2.e43d3303.chunk.css.map": "/home-climate-monitor/static/css/2.e43d3303.chunk.css.map",
-    "static/css/main.265fb1d7.chunk.css.map": "/home-climate-monitor/static/css/main.265fb1d7.chunk.css.map",
-    "static/js/2.2a93d93f.chunk.js.LICENSE.txt": "/home-climate-monitor/static/js/2.2a93d93f.chunk.js.LICENSE.txt"
+    "static/css/main.8f089024.chunk.css.map": "/home-climate-monitor/static/css/main.8f089024.chunk.css.map",
+    "static/js/2.9312ae2c.chunk.js.LICENSE.txt": "/home-climate-monitor/static/js/2.9312ae2c.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.55988cd9.js",
     "static/css/2.e43d3303.chunk.css",
-    "static/js/2.2a93d93f.chunk.js",
-    "static/css/main.265fb1d7.chunk.css",
-    "static/js/main.18fa4022.chunk.js"
+    "static/js/2.9312ae2c.chunk.js",
+    "static/css/main.8f089024.chunk.css",
+    "static/js/main.490efc57.chunk.js"
   ]
 }
