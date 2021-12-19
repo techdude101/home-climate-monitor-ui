@@ -4,6 +4,8 @@ import M from 'materialize-css/dist/js/materialize.min.js';
 
 import Cards from './cards';
 import Graph from './graph';
+import AddDevice from './add-device';
+
 import { getDevices } from '../utils/device'
 import { getLastReading, getData } from '../utils/device-data';
 
@@ -12,11 +14,14 @@ class Container extends Component {
     super(props);
     this.handleChangeDevice = this.handleChangeDevice.bind(this);
     this.handleBurger = this.handleBurger.bind(this);
+    this.toggleAddDevice = this.toggleAddDevice.bind(this);
+    this.displayGraphs = this.displayGraphs.bind(this);
     this.state = {
       devices: null,
       last_readings: [],
       selected_device: null,
-      device_data: null
+      device_data: null,
+      add_device: false
     }
   }
 
@@ -27,14 +32,14 @@ class Container extends Component {
   async handleChangeDevice(e) {
     let device = null;
     if (e.hasOwnProperty('target')) {
-      device = e.target.text;
+      device = e.target.innerText.toLowerCase();
     } else {
-      device = e;
+      device = e.toLowerCase();
     }
     // Check if the target device is different
-    if (device === this.state.selected_device.description) return;
+    if (device === this.state.selected_device.description.toLowerCase()) return;
     // Update new selected device
-    let new_selected_device = this.state.devices.filter(d => d.description === device);
+    let new_selected_device = this.state.devices.filter(d => d.description.toLowerCase() === device);
     // Retrieve data from device
     if (new_selected_device.length !== 0) {
       // Array.filter returns array - get first element in the array
@@ -73,7 +78,7 @@ class Container extends Component {
       devices: devices
     });
 
-    if (this.state.devices !== undefined) {
+    if (this.state.devices !== undefined && this.state.devices !== null) {
       this.setState({ selected_device: this.state.devices[0] })
       const readings = await Promise.all(this.state.devices.map((device) => {
         return getLastReading(device.serial);
@@ -94,6 +99,27 @@ class Container extends Component {
       }
     }
   }
+
+  displayGraphs() {
+    return <>
+      {this.state.last_readings != null ?
+        <Cards
+          selectedDevice={this.state.selected_device != null ? this.state.selected_device.description : null}
+          readings={this.state.last_readings}
+          devices={this.state.devices}
+          clickHandler={this.handleChangeDevice} />
+        : ""}
+      {this.state.device_data != null && this.state.device_data !== undefined && this.state.device_data.length > 1 ?
+        <Graph data={this.state.device_data} title={this.state.selected_device.description} />
+        : ""}
+    </>
+  }
+
+  toggleAddDevice() {
+    const addDevice = this.state.add_device;
+    this.setState({add_device: !addDevice});
+  }
+
   render() {
     return (
       <div>
@@ -109,6 +135,8 @@ class Container extends Component {
               {this.state.devices != null ? this.state.devices.map(device => {
                 return <li key={device.serial}><button onClick={this.handleChangeDevice} className="waves-effect waves-light btn grey darken-2 sidebar-links">{device.description}</button></li>
               }) : ""}
+              <li><button className="waves-effect waves-light btn grey darken-2 sidebar-links"
+                onClick={this.toggleAddDevice}>{this.state.add_device ? "Show Graphs" : "Add Device"}</button></li>
             </ul>
           </div>
           <div className="col s12 m4 l2 blue-grey darken-3 min-height-100 hide-on-med-and-down">
@@ -118,22 +146,20 @@ class Container extends Component {
               <input type="text" className="datepicker datepicker-override"></input>
               <ul>
                 {this.state.devices != null ? this.state.devices.map(device => {
-                  return <li key={device.serial}><a onClick={this.handleChangeDevice} className="waves-effect waves-light btn grey darken-2 sidebar-links">{device.description}</a></li>
+                  return <li key={device.serial}><button onClick={this.handleChangeDevice} className="waves-effect waves-light btn grey darken-2 sidebar-links">{device.description}</button></li>
                 }) : ""}
+                <div className="divider"></div>
+                <li><button className="waves-effect waves-light btn green darken-4 sidebar-links"
+                  onClick={this.toggleAddDevice}>{this.state.add_device ? "Show Graphs" : "Add Device"}</button></li>
               </ul>
             </div>
           </div>
           <div className="col s12 m12 l10 blue-grey darken-2 min-height-100vh">
-            {this.state.last_readings != null ?
-              <Cards 
-              selectedDevice={this.state.selected_device != null ? this.state.selected_device.description : null} 
-              readings={this.state.last_readings} 
-              devices={this.state.devices} 
-              clickHandler={this.handleChangeDevice} />
-              : ""}
-            {this.state.device_data != null && this.state.device_data !== undefined && this.state.device_data.length > 1 ?
-              <Graph data={this.state.device_data} title={this.state.selected_device.description} />
-              : ""}
+            {this.state.add_device ?
+              <AddDevice />
+              :
+              this.displayGraphs()
+            }
           </div>
         </div>
       </div>

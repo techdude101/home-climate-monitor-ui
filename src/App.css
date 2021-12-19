@@ -68,3 +68,11 @@
   background-color: rgb(226, 226, 226);
   margin: 5px;
 }
+
+.btn-add {
+  margin-top: 1em;
+}
+
+.form-buttons {
+  margin: 0.5em;
+}
