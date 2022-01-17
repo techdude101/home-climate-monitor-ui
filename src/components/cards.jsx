@@ -18,11 +18,18 @@ class Cards extends Component {
     return result.length !== 0 ? result[0].description : "";
   }
 
+  dateTimeIsWithinLast2Days = (datetime) => {
+    let dt = new Date(datetime);
+    let twoDaysAgo = new Date();
+    twoDaysAgo.setDate(twoDaysAgo.getDate() - 2);
+    return (dt.getTime() > twoDaysAgo);
+  }
+
   deviceCard = () => {
     if (this.props.readings === null) return;
     if (this.props.readings[0] === undefined) return;
     return  this.props.readings.map((device) => {
-      if (device[0] !== undefined) {
+      if (device[0] !== undefined && this.dateTimeIsWithinLast2Days(device[0].timestamp)) {
       return <Card
       key={device[0].serial}
       title={this.getDeviceDescription(device[0].serial)}
