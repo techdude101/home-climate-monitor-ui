@@ -14,7 +14,6 @@ class Cards extends Component {
 
   getDeviceDescription = (serial) => {
     const result = this.props.devices.filter(d => serial === d.serial);
-    // return result[0].description;
     return result.length !== 0 ? result[0].description : "";
   }
 
@@ -28,8 +27,9 @@ class Cards extends Component {
   deviceCard = () => {
     if (this.props.readings === null) return;
     if (this.props.readings[0] === undefined) return;
+    if (this.props.devices === undefined) return;
     return  this.props.readings.map((device) => {
-      if (device[0] !== undefined && this.dateTimeIsWithinLast2Days(device[0].timestamp)) {
+      if (device !== undefined && device[0] !== undefined && this.dateTimeIsWithinLast2Days(device[0].timestamp)) {
       return <Card
       key={device[0].serial}
       title={this.getDeviceDescription(device[0].serial)}

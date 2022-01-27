@@ -7,7 +7,6 @@ class AddDevice extends React.Component {
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
-    this.handleChangeNumber = this.handleChangeNumber.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     
     this.state = {
@@ -65,19 +64,6 @@ class AddDevice extends React.Component {
     this.setState({ addButtonDisabled: this.state.keyError || this.state.descriptionError });
   }
 
-  handleChangeNumber(e) {
-    const id = e.target.id;
-    const value = e.target.value;
-
-    if (!e.target.validity.valid) {
-      // Set to previous valid value if invalid
-      e.target.value = e.target.defaultValue;
-    } else {
-      if (id === 'serial_number') this.setState({ serial: value })
-      this.setState({ addButtonDisabled: this.isFormValid() });
-    }
-  }
-
   async handleSubmit(e) {
     e.preventDefault();
     console.log("submit");
@@ -111,12 +97,6 @@ class AddDevice extends React.Component {
           <div className="row">
             <div className="row">
               <div className="input-field col s12">
-                <input name="serial_number" id="serial_number" type="number" value={this.state.serial} min="1" max="100" className="validate white-text" required onChange={this.handleChangeNumber} />
-                <label htmlFor="serial_number">Device Serial Number</label>
-              </div>
-            </div>
-            <div className="row">
-              <div className="input-field col s12">
                 <input name="description" id="description" type="text" className="validate white-text" maxLength="50" required value={this.state.description} onChange={this.handleChange} />
                 <label htmlFor="description">Device Description</label>
               </div>
@@ -124,7 +104,7 @@ class AddDevice extends React.Component {
             <div className="row">
               <div className="input-field col s12">
                 <input name="pass_or_key" id="pass_or_key" type="text" className="validate white-text" required value={this.state.key} onChange={this.handleChange} />
-                <label htmlFor="pass_or_key">API Key</label>
+                <label htmlFor="pass_or_key">Admin API Key</label>
               </div>
             </div>
             <div className="row">
@@ -144,16 +124,18 @@ class AddDevice extends React.Component {
             <div className="row">
               {this.state.new_device_key ?
                 <div className="input-field col s12">
-                  <p>API key for device serial #{this.state.new_device_serial} = {this.state.new_device_key}</p> </div>
+                  <p>Device added successfully</p>
+                  <p>API key for device serial # {this.state.new_device_serial} = {this.state.new_device_key}</p> 
+                  </div>
                 : null
               }
             </div>
           </div>
           <div>
-            <button className="waves-effect waves-light red btn-flat form-buttons">
+            <button className="waves-effect waves-light red btn-flat form-buttons" onClick={this.props.handleCancel} >
               Cancel
             </button>
-            <button type="submit" className={`waves-effect waves-light green btn-flat form-buttons ${this.state.addButtonDisabled ? "disabled" : null}`} >
+            <button type="submit" className="waves-effect waves-light green btn-flat form-buttons">
               Add Device
             </button>
           </div>

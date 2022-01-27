@@ -30,6 +30,11 @@ class Container extends Component {
   }
 
   async handleChangeDevice(e) {
+    // If add device is visible change the display to show the graphs
+    if (this.state.add_device) {
+      this.setState({add_device: false});
+    }
+    
     let device = null;
     if (e.hasOwnProperty('target')) {
       device = e.target.innerText.toLowerCase();
@@ -168,7 +173,7 @@ class Container extends Component {
           <div className="col s12 m12 l10 blue-grey darken-2 min-height-100vh">
             {this.displayCards()}
             {this.state.add_device ?
-              <AddDevice />
+              <AddDevice handleCancel={this.toggleAddDevice}/>
               :
               this.displayGraphs()
             }
