@@ -44,9 +44,9 @@ class Card extends Component {
               <span className="card-span">{this.props.title ? this.props.title : "Title"}</span>
               {this.lastReadingWarning() ? <span className="card-warning-icon"><i className="material-icons yellow-text">warning</i></span> : null}
               <span className="card-title">{this.props.temperature !== null || this.props.temperature !== undefined ? this.props.temperature.toFixed(1) + "\u00b0C" : "Temperature Error"}</span>
-              <div className={`card-humidity-battery ${this.props.battery === 0 ? "card-battery-hidden" : ""}`}>
-                <p className="card-span">{this.props.humidity ? this.props.humidity + "%" : ""}</p>
-                  <div className="battery card-battery-icon">
+              <div className={`card-humidity-battery`}>
+                <p className="card-span">{this.props.humidity !== undefined && this.props.humidity > 0 ? this.props.humidity + "%" : ""}</p>
+                  <div className={`battery card-battery-icon ${this.props.battery === 0 ? "card-battery-hidden" : ""}`}>
                     <span className="battery-level-text">{this.props.battery + "%"}</span>
                     <span className={`battery-level ${this.props.battery < 10 ? "battery-level-alert" : ""}`} style={{ height: this.props.battery < 10 ? "20% " : this.props.battery + "%" }}></span>
                   </div>
