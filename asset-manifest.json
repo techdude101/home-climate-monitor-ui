@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "/home-climate-monitor-ui/static/css/main.f9b0a02a.chunk.css",
-    "main.js": "/home-climate-monitor-ui/static/js/main.7e4eaf05.chunk.js",
-    "main.js.map": "/home-climate-monitor-ui/static/js/main.7e4eaf05.chunk.js.map",
+    "main.css": "/home-climate-monitor-ui/static/css/main.f4406f26.chunk.css",
+    "main.js": "/home-climate-monitor-ui/static/js/main.5d6f1a57.chunk.js",
+    "main.js.map": "/home-climate-monitor-ui/static/js/main.5d6f1a57.chunk.js.map",
     "runtime-main.js": "/home-climate-monitor-ui/static/js/runtime-main.f91d8809.js",
     "runtime-main.js.map": "/home-climate-monitor-ui/static/js/runtime-main.f91d8809.js.map",
     "static/css/2.e43d3303.chunk.css": "/home-climate-monitor-ui/static/css/2.e43d3303.chunk.css",
-    "static/js/2.d6e1cbe0.chunk.js": "/home-climate-monitor-ui/static/js/2.d6e1cbe0.chunk.js",
-    "static/js/2.d6e1cbe0.chunk.js.map": "/home-climate-monitor-ui/static/js/2.d6e1cbe0.chunk.js.map",
+    "static/js/2.ee1e3aa1.chunk.js": "/home-climate-monitor-ui/static/js/2.ee1e3aa1.chunk.js",
+    "static/js/2.ee1e3aa1.chunk.js.map": "/home-climate-monitor-ui/static/js/2.ee1e3aa1.chunk.js.map",
     "index.html": "/home-climate-monitor-ui/index.html",
     "static/css/2.e43d3303.chunk.css.map": "/home-climate-monitor-ui/static/css/2.e43d3303.chunk.css.map",
-    "static/css/main.f9b0a02a.chunk.css.map": "/home-climate-monitor-ui/static/css/main.f9b0a02a.chunk.css.map",
-    "static/js/2.d6e1cbe0.chunk.js.LICENSE.txt": "/home-climate-monitor-ui/static/js/2.d6e1cbe0.chunk.js.LICENSE.txt"
+    "static/css/main.f4406f26.chunk.css.map": "/home-climate-monitor-ui/static/css/main.f4406f26.chunk.css.map",
+    "static/js/2.ee1e3aa1.chunk.js.LICENSE.txt": "/home-climate-monitor-ui/static/js/2.ee1e3aa1.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.f91d8809.js",
     "static/css/2.e43d3303.chunk.css",
-    "static/js/2.d6e1cbe0.chunk.js",
-    "static/css/main.f9b0a02a.chunk.css",
-    "static/js/main.7e4eaf05.chunk.js"
+    "static/js/2.ee1e3aa1.chunk.js",
+    "static/css/main.f4406f26.chunk.css",
+    "static/js/main.5d6f1a57.chunk.js"
   ]
 }
