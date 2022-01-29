@@ -28,6 +28,31 @@ class Graph extends Component {
     }
   }
 
+  displayChart() {
+    if (this.state === null) return "";
+    if (this.state.humidity === null || this.state.humidity[0] === 0) {
+      return <LineChart
+      labelLeft="Temperature (℃)"
+      xData={this.state.timestamps}
+      yDataLeft={this.state.temperatures}
+      axisNameLeft="Temperature"
+      hoverTemplateLeft='%{y:.1f}&deg;C'
+      title={" "} 
+      />  
+    }
+    return <LineChart
+    labelLeft="Temperature (℃)"
+    labelRight="Humidity (%)"
+    xData={this.state.timestamps}
+    yDataLeft={this.state.temperatures}
+    yDataRight={this.state.humidity}
+    axisNameLeft="Temperature"
+    axisNameRight="Humidity"
+    hoverTemplateLeft='%{y:.1f}&deg;C'
+    hoverTemplateRight='%{y:.0f}%'
+    title={" "} />
+  }
+
   render() {
     return (
       <div className="row">
@@ -37,15 +62,7 @@ class Graph extends Component {
               {this.props.title}
             </div>
             <div className="card-content white-text">
-              {this.state !== null ? 
-              <LineChart
-                labelLeft="Temperature (℃)"
-                labelRight="Humidity (%)"
-                xData={this.state.timestamps}
-                yDataLeft={this.state.temperatures}
-                yDataRight={this.state.humidity}
-                title={" "}
-              /> : ""}
+            {this.displayChart()}
             </div>
           </div>
         </div>

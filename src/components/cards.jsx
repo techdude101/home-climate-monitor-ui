@@ -35,6 +35,7 @@ class Cards extends Component {
       title={this.getDeviceDescription(device[0].serial)}
       humidity={device[0].humidity}
       temperature={device[0].temperature}
+      battery={device[0].battery}
       date={device[0].timestamp} 
       clickHandler={this.clickHandler} 
       selected={this.props.selectedDevice === this.getDeviceDescription(device[0].serial)} />

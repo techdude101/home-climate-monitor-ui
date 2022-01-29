@@ -95,62 +95,77 @@ class LineChart extends React.Component {
       })
     }
   }
-
+  
   render() {
-    return (
-        <Plot
-          data={[
-            {
-              x: this.props.xData,
-              y: this.props.yDataLeft,
-              name: "Temperature",
-              mode: 'lines',
-              hovertemplate: ' %{y:.1f}&deg;C',
-            },
-            {
-              x: this.props.xData,
-              y: this.props.yDataRight,
-              yaxis: "y2",
-              name: "Humidity",
-              mode: 'lines',
-              hovertemplate: ' %{y:.0f}%',
-            },
-          ]}
-          layout={{
-            margin: {
-              t: 90,
-              b: 90,
-              l: 70,
-              r: 70,
-              pad: 10
-            },
+    let data = []
+    if (this.props.yDataRight) {
+      data = [
+        {
+          x: this.props.xData,
+          y: this.props.yDataLeft,
+          name: this.props.axisNameLeft,
+          mode: 'lines',
+          hovertemplate: this.props.hoverTemplateLeft
+        },
+        {
+          x: this.props.xData,
+          y: this.props.yDataRight,
+          yaxis: "y2",
+          name: this.props.axisNameRight,
+          mode: 'lines',
+          hovertemplate: this.props.hoverTemplateRight,
+        },
+      ]
+    } else {
+      data = [
+        {
+          x: this.props.xData,
+          y: this.props.yDataLeft,
+          name: this.props.axisNameLeft,
+          mode: 'lines',
+          hovertemplate: this.props.hoverTemplateLeft
+        },
+      ]
+    }
 
-            autosize: true,
-            legend: {
-              orientation: "h",
-              yanchor: "bottom",
-              y: 1.12,
-              xanchor: "right",
-              x: 1,
-            },
-            xaxis: {
-              title: { text: 'Date/Time' },
-              autorange: "false",
-              type: 'date',
-            },
-            yaxis: { title: 'Temperature (&deg;C)', automargin: true, range: [this.state.minY1, this.state.maxY1] },
-            yaxis2: {
-              title: 'Humidity (%)',
-              range: [0, 100],
-              overlaying: 'y',
-              side: 'right',
-              automargin: true,
-            },
-            hovermode: "x unified",
-          }}
-          useResizeHandler={true}
-          style={{ maxWidth: "100%", height: "100%" }}
-        />
+    return (
+      <Plot
+        data={data}
+        layout={{
+          margin: {
+            t: 90,
+            b: 90,
+            l: 70,
+            r: 70,
+            pad: 10
+          },
+
+          autosize: true,
+          legend: {
+            orientation: "h",
+            yanchor: "bottom",
+            y: 1.12,
+            xanchor: "right",
+            x: 1,
+          },
+          xaxis: {
+            title: { text: 'Date/Time' },
+            autorange: "false",
+            type: 'date',
+          },
+          yaxis: { title: this.props.labelLeft, automargin: true, range: [this.state.minY1, this.state.maxY1] },
+          yaxis2: {
+            title: this.props.labelRight,
+            range: [0, 100],
+            overlaying: 'y',
+            side: 'right',
+            automargin: true,
+          },
+          hovermode: "x unified",
+        }}
+        useResizeHandler={true}
+        style={{ maxWidth: "100%", height: "100%" }}
+      />
     )
   }
 }
