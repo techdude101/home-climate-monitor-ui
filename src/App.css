@@ -59,9 +59,17 @@
 }
 
 .card-battery-icon {
-  font-size: 1.5em;
-  margin: 1em;
-  float: right;
+  margin: 0;
+}
+
+.card-humidity-battery {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  padding-right: 1.7em;
+  margin-bottom: 0.5em;
+  display: flex;
+  justify-content: space-between;
 }
 
 .card-pointer { cursor: pointer; }
@@ -89,26 +97,30 @@
   margin: 0.5em;
 }
 
+.card-battery-hidden {
+  opacity: 0;
+}
+
 .battery {
+  opacity: 1;
   border: 3px solid #333;
   width: 18px;
   height: 28px;
   padding: 2px;
   border-radius: 4px;
   position: relative;
-  margin: 15px 0;
 }
 
-/* .battery::before {
+.battery::before {
   content: '';
   height: 3px;
-  width: 18px !important;
-  background: #333;
+  width: 8px !important;
+  background: #fff;
   display: block;
   position: absolute;
-  top: -6px;
+  top: -3px;
   border-radius: 4px 4px 0 0;
-} */
+}
 
 .battery::after {
   content: '';
@@ -128,6 +140,13 @@
   bottom: 0px;
   left: 0;
   right: 0;
+}
+
+.battery-level-text {
+  position: absolute;
+  bottom: 0px;
+  right: 20px;
+  font-size: 0.7em;
 }
 
 .battery-level-warn {

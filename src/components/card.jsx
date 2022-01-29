@@ -44,14 +44,17 @@ class Card extends Component {
               <span className="card-span">{this.props.title ? this.props.title : "Title"}</span>
               {this.lastReadingWarning() ? <span className="card-warning-icon"><i className="material-icons yellow-text">warning</i></span> : null}
               <span className="card-title">{this.props.temperature !== null || this.props.temperature !== undefined ? this.props.temperature.toFixed(1) + "\u00b0C" : "Temperature Error"}</span>
-              <p className="card-span">{this.props.humidity ? this.props.humidity + "%" : <br />}</p>
-              {/* <p className="card-span">{this.props.battery + "%"}
-                <div className="battery" style={{float:"right", transform:"rotate(90deg)"}}>
-                  <div className="battery-level" style={{height: this.props.battery + "%"}}></div>
-                </div>
-                </p> */}
+              <div className={`card-humidity-battery ${this.props.battery === 0 ? "card-battery-hidden" : ""}`}>
+                <p className="card-span">{this.props.humidity ? this.props.humidity + "%" : ""}</p>
+                  <div className="battery card-battery-icon">
+                    <span className="battery-level-text">{this.props.battery + "%"}</span>
+                    <span className={`battery-level ${this.props.battery < 10 ? "battery-level-alert" : ""}`} style={{ height: this.props.battery < 10 ? "20% " : this.props.battery + "%" }}></span>
+                  </div>
+              </div>
               <div className="divider"></div>
-              <span className={`card-span ${this.lastReadingWarning() && "red-text"}`}>{this.props.date ? this.formatDate(this.props.date) : "Date Error"}</span>
+              <span className={`card-span ${this.lastReadingWarning() && "red-text"}`}>
+                {this.props.date ? this.formatDate(this.props.date) : "Date Error"}
+              </span>
             </div>
           </div>
         </div>
