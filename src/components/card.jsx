@@ -1,40 +1,22 @@
 import React, { Component } from 'react';
-
+import {isTimestampMoreThan1HourAgo, formatDate} from '../utils/date-time-utils';
 
 class Card extends Component {
   constructor(props) {
     super(props);
     this.handleClick = this.handleClick.bind(this);
   }
-  dateToUTC(d) {
-    return Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate(), d.getUTCHours(), d.getUTCMinutes(), d.getUTCSeconds());
-  }
+  
 
   // Check if last reading was over 1 hour ago
   lastReadingWarning() {
-    const reading = new Date(this.props.date);
-    const readingUTC = this.dateToUTC(reading);
-    const now = new Date();
-    const nowUTC = this.dateToUTC(now);
-    const difference = (nowUTC - readingUTC) / 1000; // seconds
-
-    // 60 seconds * 60 minutes
-    if (difference > (60 * 60)) {
-      return true;
-    }
-    return false;
+    return isTimestampMoreThan1HourAgo(this.props.date);
   }
 
   handleClick(e) {
     this.props.clickHandler(this.props.title);
   }
 
-  formatDate(date) {
-    // Get user locale from browser
-    const locale = navigator.language;
-
-    return new Intl.DateTimeFormat(locale, { dateStyle: 'short', timeStyle: 'short', hour12: false }).format(new Date(date));
-  }
   render() {
     return (
       <div className="col s12 m5 l3">
@@ -53,7 +35,7 @@ class Card extends Component {
               </div>
               <div className="divider"></div>
               <span className={`card-span ${this.lastReadingWarning() && "red-text"}`}>
-                {this.props.date ? this.formatDate(this.props.date) : "Date Error"}
+                {this.props.date ? formatDate(this.props.date) : "Date Error"}
               </span>
             </div>
           </div>

@@ -1,5 +1,7 @@
 import React from 'react';
 import Plotly from "plotly.js-basic-dist";
+import { formatTime, formatDate } from '../utils/date-time-utils';
+import { getNelementsEvenlySpaced } from '../utils/array-utils';
 
 import createPlotlyComponent from "react-plotly.js/factory";
 const Plot = createPlotlyComponent(Plotly);
@@ -15,7 +17,22 @@ class LineChart extends React.Component {
       dateData: [],
       chartData: {},
       options: {},
+      text: null,
+      reducedXVals: this.reduceXDataForTicks(),
+      loading: true,
     }
+  }
+
+  reduceXDataForTicks() {
+    return getNelementsEvenlySpaced(this.props.xData, 4);
+  }
+
+  getTickVals() {
+    return this.state.reducedXVals.map(v => new Date(v).getTime());
+  }
+
+  getTextVals() {
+    return this.state.reducedXVals.map(v => formatTime(v));
   }
 
   getMinOfArray(numArray) {
@@ -32,10 +49,15 @@ class LineChart extends React.Component {
 
     const minY2 = Math.round(this.getMinOfArray(this.props.yDataRight) - 1);
     const maxY2 = Math.round(this.getMaxOfArray(this.props.yDataRight) + 1);
+    const text = this.props.xData.map(v => formatDate(v));
+    const xVals = this.props.xData.map(v => new Date(v).getTime());
 
     this.setState({
       minY1: minY1,
       maxY1: maxY1,
+      text: text,
+      xVals: xVals,
+      loading: false,
       options: {
         color: '#FFF',
         elements: {
@@ -101,19 +123,21 @@ class LineChart extends React.Component {
     if (this.props.yDataRight) {
       data = [
         {
-          x: this.props.xData,
+          x: this.state.xVals,
           y: this.props.yDataLeft,
           name: this.props.axisNameLeft,
           mode: 'lines',
-          hovertemplate: this.props.hoverTemplateLeft
+          hovertemplate: this.props.hoverTemplateLeft,
+          text: this.state.text,
         },
         {
-          x: this.props.xData,
+          x: this.state.xVals,
           y: this.props.yDataRight,
           yaxis: "y2",
           name: this.props.axisNameRight,
           mode: 'lines',
           hovertemplate: this.props.hoverTemplateRight,
+          text: this.state.text,
         },
       ]
     } else {
@@ -128,7 +152,10 @@ class LineChart extends React.Component {
       ]
     }
 
+    const loading = this.state.loading;
     return (
+      <div>
+      {loading ? <p>"Loading..."</p> : 
       <Plot
         data={data}
         layout={{
@@ -149,9 +176,12 @@ class LineChart extends React.Component {
             x: 1,
           },
           xaxis: {
+            type: "linear",
             title: { text: 'Date/Time' },
-            autorange: "false",
-            type: 'date',
+            autorange: true,
+            tickmode: "array",
+            tickvals: this.getTickVals(),
+            ticktext: this.getTextVals(),
           },
           yaxis: { title: this.props.labelLeft, automargin: true, range: [this.state.minY1, this.state.maxY1] },
           yaxis2: {
@@ -161,11 +191,12 @@ class LineChart extends React.Component {
             side: 'right',
             automargin: true,
           },
-          hovermode: "x unified",
+          // hovermode: "x unified",
         }}
         useResizeHandler={true}
         style={{ maxWidth: "100%", height: "100%" }}
-      />
+      />}
+      </div>
     )
   }
 }

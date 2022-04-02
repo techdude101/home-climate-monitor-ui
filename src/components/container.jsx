@@ -62,6 +62,7 @@ class Container extends Component {
     if (serial == null) return;
     let start_date = new Date();
     start_date.setDate(start_date.getDate() - 1);
+
     let end_date = new Date();
     end_date.setDate(end_date.getDate() + 1);
 
@@ -91,13 +92,9 @@ class Container extends Component {
       this.setState({
         last_readings: readings
       })
-
-      let start_date = new Date();
-      start_date.setDate(start_date.getDate() - 1);
-      let end_date = new Date();
-      end_date.setDate(end_date.getDate() + 1);
+     
       if (this.state.selected_device !== undefined) {
-        const data = await getData(this.state.selected_device.serial, start_date.toISOString(), end_date.toISOString());
+        const data = await this.getDataLast24Hours(this.state.selected_device.serial);
         if (data !== undefined) {
           this.setState({ device_data: data });
         }

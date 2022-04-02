@@ -36,7 +36,7 @@ class Graph extends Component {
       xData={this.state.timestamps}
       yDataLeft={this.state.temperatures}
       axisNameLeft="Temperature"
-      hoverTemplateLeft='%{y:.1f}&deg;C'
+      hoverTemplateLeft='%{text}<br>%{y:.1f}&deg;C<extra></extra>'
       title={" "} 
       />  
     }
@@ -48,8 +48,8 @@ class Graph extends Component {
     yDataRight={this.state.humidity}
     axisNameLeft="Temperature"
     axisNameRight="Humidity"
-    hoverTemplateLeft='%{y:.1f}&deg;C'
-    hoverTemplateRight='%{y:.0f}%'
+    hoverTemplateLeft='%{text}<br>%{y:.1f}&deg;C<extra></extra>'
+    hoverTemplateRight='%{text}<br>%{y:.0f}%<extra></extra>'
     title={" "} />
   }
 
