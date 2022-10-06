@@ -44,8 +44,8 @@ class LineChart extends React.Component {
   }
 
   componentDidMount() {
-    const minY1 = Math.floor(this.getMinOfArray(this.props.yDataLeft));
-    const maxY1 = Math.ceil(this.getMaxOfArray(this.props.yDataLeft));
+    const minY1 = Math.round(this.getMinOfArray(this.props.yDataLeft) - 1);
+    const maxY1 = Math.round(this.getMaxOfArray(this.props.yDataLeft) + 1);
 
     const minY2 = Math.round(this.getMinOfArray(this.props.yDataRight) - 1);
     const maxY2 = Math.round(this.getMaxOfArray(this.props.yDataRight) + 1);
@@ -143,19 +143,20 @@ class LineChart extends React.Component {
     } else {
       data = [
         {
-          x: this.props.xData,
+          x: this.state.xVals,
           y: this.props.yDataLeft,
           name: this.props.axisNameLeft,
           mode: 'lines',
-          hovertemplate: this.props.hoverTemplateLeft
-        },
+          hovertemplate: this.props.hoverTemplateLeft,
+          text: this.state.text,
+        }
       ]
     }
 
     const loading = this.state.loading;
     return (
       <div>
-      {loading ? <p>"Loading..."</p> : 
+      {loading ? <p>Loading...</p> : 
       <Plot
         data={data}
         layout={{
@@ -191,7 +192,6 @@ class LineChart extends React.Component {
             side: 'right',
             automargin: true,
           },
-          // hovermode: "x unified",
         }}
         useResizeHandler={true}
         style={{ maxWidth: "100%", height: "100%" }}

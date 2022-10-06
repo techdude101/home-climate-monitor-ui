@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import 'materialize-css/dist/css/materialize.min.css';
-import M from 'materialize-css/dist/js/materialize.min.js';
+import 'materialize-css/dist/js/materialize.min.js';
+import { DatePicker } from "react-materialize";
 
 import Cards from './cards';
 import Graph from './graph';
@@ -8,6 +9,7 @@ import AddDevice from './add-device';
 
 import { getDevices } from '../utils/device'
 import { getLastReading, getData } from '../utils/device-data';
+import { isToday } from '../utils/date-time-utils';
 
 class Container extends Component {
   constructor(props) {
@@ -21,12 +23,29 @@ class Container extends Component {
       last_readings: [],
       selected_device: null,
       device_data: null,
-      add_device: false
+      add_device: false,
+      selected_date: new Date(),
+      loading: false
     }
   }
 
   handleBurger(e) {
     console.log("burger");
+  }
+
+  async handleDateChange(e) {
+    const value = e.target.value;
+
+    const newState = {...this.state}
+    newState["selected_date"] = value;
+    newState["loading"] = true;
+    this.setState(newState);
+
+    const data = await this.getData24Hours(this.state.selected_device.serial, value);
+    this.setState({
+      device_data: data,
+      loading: false
+    });
   }
 
   async handleChangeDevice(e) {
@@ -49,7 +68,17 @@ class Container extends Component {
     if (new_selected_device.length !== 0) {
       // Array.filter returns array - get first element in the array
       new_selected_device = new_selected_device[0];
-      const data = await this.getDataLast24Hours(new_selected_device.serial);
+      const newState = {...this.state};
+      newState["loading"] = true;
+      this.setState(newState);
+      
+      let data = null;
+      if (isToday(this.state.selected_date)) {
+        data = await this.getDataLast24Hours(new_selected_device.serial);
+      } else {
+        data = await this.getData24Hours(new_selected_device.serial, this.selected_date);
+      }
+      
       this.setState({
         selected_device: new_selected_device,
         device_data: data
@@ -69,15 +98,19 @@ class Container extends Component {
     return getData(serial, start_date.toISOString(), end_date.toISOString());
   }
 
+  async getData24Hours(serial, startDate) {
+    if (serial === undefined) return;
+    if (serial == null) return;
+    if (startDate === undefined) return;
+    if (startDate === null) return;
+
+    let end_date = new Date(startDate);
+    end_date.setDate(startDate.getDate() + 1);
+
+    return getData(serial, startDate.toISOString(), end_date.toISOString());
+  }
+
   async componentDidMount() {
-    document.addEventListener('DOMContentLoaded', function () {
-      var elems = document.querySelectorAll('.datepicker');
-      const options = {
-        defaultDate: new Date(),
-        setDefaultDate: true,
-      }
-      var instances = M.Datepicker.init(elems, options);
-    });
     const devices = await getDevices();
 
     this.setState({
@@ -107,6 +140,8 @@ class Container extends Component {
       if (this.state.device_data.length === 0) {
         // If no data is available display "no data"
         return <h1 className="white-text center-align">No Data</h1>
+      } else if (this.state.loading) {
+        return <h1 className="white-text center-align">Loading...</h1>
       } else {
         // Display a graph if data is available
         return <Graph data={this.state.device_data} title={this.state.selected_device.description} />
@@ -156,7 +191,18 @@ class Container extends Component {
             <div className="section white-text text-center">
               <h1 className="white-text sidebar-title">Graphs</h1>
               <div className="divider"></div>
-              <input type="text" className="datepicker datepicker-override"></input>
+              <DatePicker value={this.selected_date}
+                id="datePicker" options={{
+                  defaultDate: this.state.selected_date,
+                  setDefaultDate: true
+                }} onChange={(newDate) => {
+                  this.handleDateChange({
+                    target: {
+                      id: "datePicker",
+                      value: newDate
+                    }
+                  });
+                }} />
               <ul>
                 {this.state.devices != null ? this.state.devices.map(device => {
                   return <li key={device.serial}><button onClick={this.handleChangeDevice} className="waves-effect waves-light btn grey darken-2 sidebar-links">{device.description}</button></li>

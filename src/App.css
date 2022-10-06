@@ -42,7 +42,12 @@
 }
 
 .datepicker-override {
-  color: black;
+  color: black !important;
+}
+
+
+.datepicker-day-button {
+  color: black !important;
 }
 
 .width-100 { width: 100%; }

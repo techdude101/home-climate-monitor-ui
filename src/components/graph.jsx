@@ -30,6 +30,7 @@ class Graph extends Component {
 
   displayChart() {
     if (this.state === null) return "";
+    // Temperature only
     if (this.state.humidity === null || this.state.humidity[0] === 0) {
       return <LineChart
       labelLeft="Temperature (℃)"
@@ -40,6 +41,7 @@ class Graph extends Component {
       title={" "} 
       />  
     }
+    // Temperature and humidity
     return <LineChart
     labelLeft="Temperature (℃)"
     labelRight="Humidity (%)"
@@ -58,7 +60,7 @@ class Graph extends Component {
       <div className="row">
         <div className="col s12 m12 l12">
           <div className="card blue-grey darken-1">
-            <div className="card-title white-text center-align hide-on-large-only">
+            <div className="card-title white-text center-align">
               {this.props.title}
             </div>
             <div className="card-content white-text">
