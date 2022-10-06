@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "/home-climate-monitor-ui/static/css/main.62d76dc9.chunk.css",
-    "main.js": "/home-climate-monitor-ui/static/js/main.8b41606c.chunk.js",
-    "main.js.map": "/home-climate-monitor-ui/static/js/main.8b41606c.chunk.js.map",
-    "runtime-main.js": "/home-climate-monitor-ui/static/js/runtime-main.f91d8809.js",
-    "runtime-main.js.map": "/home-climate-monitor-ui/static/js/runtime-main.f91d8809.js.map",
+    "main.css": "/home-climate-monitor-ui/static/css/main.b640b870.chunk.css",
+    "main.js": "/home-climate-monitor-ui/static/js/main.985ef2c6.chunk.js",
+    "main.js.map": "/home-climate-monitor-ui/static/js/main.985ef2c6.chunk.js.map",
+    "runtime-main.js": "/home-climate-monitor-ui/static/js/runtime-main.de6de2f9.js",
+    "runtime-main.js.map": "/home-climate-monitor-ui/static/js/runtime-main.de6de2f9.js.map",
     "static/css/2.e43d3303.chunk.css": "/home-climate-monitor-ui/static/css/2.e43d3303.chunk.css",
-    "static/js/2.a46fda23.chunk.js": "/home-climate-monitor-ui/static/js/2.a46fda23.chunk.js",
-    "static/js/2.a46fda23.chunk.js.map": "/home-climate-monitor-ui/static/js/2.a46fda23.chunk.js.map",
+    "static/js/2.06933c7b.chunk.js": "/home-climate-monitor-ui/static/js/2.06933c7b.chunk.js",
+    "static/js/2.06933c7b.chunk.js.map": "/home-climate-monitor-ui/static/js/2.06933c7b.chunk.js.map",
     "index.html": "/home-climate-monitor-ui/index.html",
     "static/css/2.e43d3303.chunk.css.map": "/home-climate-monitor-ui/static/css/2.e43d3303.chunk.css.map",
-    "static/css/main.62d76dc9.chunk.css.map": "/home-climate-monitor-ui/static/css/main.62d76dc9.chunk.css.map",
-    "static/js/2.a46fda23.chunk.js.LICENSE.txt": "/home-climate-monitor-ui/static/js/2.a46fda23.chunk.js.LICENSE.txt"
+    "static/css/main.b640b870.chunk.css.map": "/home-climate-monitor-ui/static/css/main.b640b870.chunk.css.map",
+    "static/js/2.06933c7b.chunk.js.LICENSE.txt": "/home-climate-monitor-ui/static/js/2.06933c7b.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.f91d8809.js",
+    "static/js/runtime-main.de6de2f9.js",
     "static/css/2.e43d3303.chunk.css",
-    "static/js/2.a46fda23.chunk.js",
-    "static/css/main.62d76dc9.chunk.css",
-    "static/js/main.8b41606c.chunk.js"
+    "static/js/2.06933c7b.chunk.js",
+    "static/css/main.b640b870.chunk.css",
+    "static/js/main.985ef2c6.chunk.js"
   ]
 }
