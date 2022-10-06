@@ -45,16 +45,29 @@
   color: black !important;
 }
 
+.datepicker {
+  color: white;
+}
 
+/* Override datepicker color - background & color is white
+   making dates unreadable
+*/
 .datepicker-day-button {
   color: black !important;
 }
 
+/* Override datepicker is-disabled
+   by default pointer-events is none
+   from a user perspective looks like a bug and they can't select a valid date
+*/
 .is-disabled {
   pointer-events: auto !important;
   cursor: not-allowed;
 }
 
+/* Set pointer-events to none at this level allows cursor to be displayed 
+   but also prevent selecting a date in the future
+*/
 .is-disabled button {
   pointer-events: none;
   cursor: not-allowed;
