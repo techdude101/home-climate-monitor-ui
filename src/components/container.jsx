@@ -81,7 +81,8 @@ class Container extends Component {
       
       this.setState({
         selected_device: new_selected_device,
-        device_data: data
+        device_data: data,
+        loading: false
       });
     }
   }
@@ -194,7 +195,9 @@ class Container extends Component {
               <DatePicker value={this.selected_date}
                 id="datePicker" options={{
                   defaultDate: this.state.selected_date,
-                  setDefaultDate: true
+                  setDefaultDate: true,
+                  maxDate: new Date(),
+                  showDaysInNextAndPreviousMonths: false
                 }} onChange={(newDate) => {
                   this.handleDateChange({
                     target: {

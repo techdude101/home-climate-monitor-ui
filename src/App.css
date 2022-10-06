@@ -50,6 +50,16 @@
   color: black !important;
 }
 
+.is-disabled {
+  pointer-events: auto !important;
+  cursor: not-allowed;
+}
+
+.is-disabled button {
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
 .width-100 { width: 100%; }
 
 .card-icons {
