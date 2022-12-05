@@ -1,2 +1,2 @@
-export const URL = 'https://home-climate-monitor.herokuapp.com';
+export const URL = 'https://hcm.techdude101.com';
 // export const URL = 'https://dev-hcm.herokuapp.com';
