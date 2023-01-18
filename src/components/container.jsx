@@ -90,6 +90,7 @@ class Container extends Component {
   async getDataLast24Hours(serial) {
     if (serial === undefined) return;
     if (serial == null) return;
+
     let start_date = new Date();
     start_date.setDate(start_date.getDate() - 1);
 

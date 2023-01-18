@@ -22,7 +22,12 @@
     if (!date) return null;
     // Get user locale from browser
     const locale = navigator.language;
-    let dateTime = new Date(date + 'Z');
+    let dateTime = null;
+    if (typeof date !== Object) {
+      dateTime = new Date(date + 'Z').getTime();
+    } else {
+      dateTime = new Date(date).getTime();
+    }
     
     return new Intl.DateTimeFormat([locale, 'en-GB'], { dateStyle: 'short', timeStyle: 'long', hour12: false }).format(dateTime);
   };
@@ -45,9 +50,9 @@
     const locale = navigator.language;
     let dateTime = null;
     if (typeof date !== Object) {
-      dateTime = new Date(date + 'Z');
+      dateTime = new Date(date + 'Z').getTime();
     } else {
-      dateTime = new Date(date);
+      dateTime = new Date(date).getTime();
     }
 
     return new Intl.DateTimeFormat([locale, 'en-GB'], { timeStyle: 'long', hour12: false }).format(dateTime);

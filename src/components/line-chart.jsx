@@ -28,7 +28,7 @@ class LineChart extends React.Component {
   }
 
   getTickVals() {
-    return this.state.reducedXVals.map(v => new Date(v).getTime());
+    return this.state.reducedXVals.map(v => new Date(v).getTime().toString());
   }
 
   getTextVals() {
@@ -50,7 +50,7 @@ class LineChart extends React.Component {
     const minY2 = Math.round(this.getMinOfArray(this.props.yDataRight) - 1);
     const maxY2 = Math.round(this.getMaxOfArray(this.props.yDataRight) + 1);
     const text = this.props.xData.map(v => formatDate(v));
-    const xVals = this.props.xData.map(v => new Date(v).getTime());
+    const xVals = this.props.xData.map(v => new Date(v + 'Z').getTime());
 
     this.setState({
       minY1: minY1,
@@ -129,6 +129,8 @@ class LineChart extends React.Component {
           mode: 'lines',
           hovertemplate: this.props.hoverTemplateLeft,
           text: this.state.text,
+          type: 'scatter',
+          connectgaps: false,
         },
         {
           x: this.state.xVals,
@@ -138,6 +140,7 @@ class LineChart extends React.Component {
           mode: 'lines',
           hovertemplate: this.props.hoverTemplateRight,
           text: this.state.text,
+          connectgaps: false,
         },
       ]
     } else {
@@ -149,6 +152,7 @@ class LineChart extends React.Component {
           mode: 'lines',
           hovertemplate: this.props.hoverTemplateLeft,
           text: this.state.text,
+          connectgaps: false,
         }
       ]
     }
