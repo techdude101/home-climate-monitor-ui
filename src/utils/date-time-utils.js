@@ -1,4 +1,9 @@
-    export const isTimestampMoreThan1HourAgo = (timestamp=null) => {
+    /**
+     * Check if a given timestamp is more than one hour ago
+     * @param {number} timestamp 
+     * @returns {boolean}
+     */
+    export const isTimestampMoreThan1HourAgo = (timestamp) => {
       if (timestamp === undefined || timestamp == null) return true;
       const reading = new Date(timestamp);
       const readingUTC = dateToUTC(reading);
@@ -14,10 +19,20 @@
       return false;
   };
 
-  export const dateToUTC = (d) => {
-    return Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate(), d.getUTCHours(), d.getUTCMinutes(), d.getUTCSeconds());
+  /**
+   * Convert Date object to unix timestamp
+   * @param {Date} date - Date object
+   * @returns {number} Returns the number of milliseconds between midnight, January 1, 1970 Universal Coordinated Time (UTC) and the specified date.
+   */
+  export const dateToUTC = (date) => {
+    return Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
   }
 
+    /**
+   * Format date and time to match user locale
+   * @param {Date | string} date - Date object or ISO 8601 date time string
+   * @returns {string | null} Formatted date and time as a string or null if an invalid date is passed
+   */
   export const formatDate = (date) => {
     if (!date) return null;
     // Get user locale from browser
@@ -32,19 +47,37 @@
     return new Intl.DateTimeFormat([locale, 'en-GB'], { dateStyle: 'short', timeStyle: 'long', hour12: false }).format(dateTime);
   };
 
-  export const dateObjectToDate = (dateObject)  => {
+  /**
+   * Converts a Date object to a date string
+   * @example
+   * // returns 2023-02-01
+   * dateObjectToDateString(new Date("2023-02-01T07:26:06.161Z"))
+   * @param {Date} dateObject - Date object
+   * @returns {string} date part of ISO 8601 date string
+   */
+  export const dateObjectToDateString = (dateObject)  => {
     const offset = dateObject.getTimezoneOffset()
     const dateWithOffset = new Date(dateObject.getTime() - (offset * 60 * 1000));
     return dateWithOffset.toISOString().split('T')[0]
   }
 
+  /**
+   * Is a given Date object today
+   * @param {Date} dateObject 
+   * @returns {boolean}
+   */
   export const isToday = (dateObject) => {
     const now = new Date();
-    const dateTodayString = dateObjectToDate(now);
-    const dateObjectString = dateObjectToDate(dateObject);
+    const dateTodayString = dateObjectToDateString(now);
+    const dateObjectString = dateObjectToDateString(dateObject);
     return (dateTodayString === dateObjectString);
   }
 
+  /**
+   * Format time to match user locale
+   * @param {Date | string} date - Date object or ISO 8601 date time string
+   * @returns {string | null} Formatted time as a string or null if an invalid date is passed
+   */
   export const formatTime = (date) => {
     if (!date) return null;
     const locale = navigator.language;
@@ -57,3 +90,22 @@
 
     return new Intl.DateTimeFormat([locale, 'en-GB'], { timeStyle: 'long', hour12: false }).format(dateTime);
   };
+
+  /**
+   * Insert gaps in an array of unix timestamps
+   * 
+   * Inserts null values when a gap of more than <delta> milliseconds is detected
+   * @param {number[]} timestamps - an array of unix timestamps
+   * @param {number} delta - delta between timestamps in milliseconds
+   * @returns {Array} - Returns a new array with null values inserted where gaps have been detected
+   */
+  export const insertGaps = (timestamps, delta) => {
+    let timestampsCopy = [...timestamps];
+  
+    for (let index = 1; index < timestamps.length; index++) {
+      if (Math.abs(timestamps[index] - timestamps[index - 1]) > delta) {
+        timestampsCopy.splice(index - 1, 0, null)
+      }
+    }
+    return timestampsCopy;
+  }

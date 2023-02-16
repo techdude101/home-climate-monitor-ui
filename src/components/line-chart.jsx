@@ -1,6 +1,6 @@
 import React from 'react';
 import Plotly from "plotly.js-basic-dist";
-import { formatTime, formatDate } from '../utils/date-time-utils';
+import { formatTime, formatDate, insertGaps } from '../utils/date-time-utils';
 import { getNelementsEvenlySpaced } from '../utils/array-utils';
 
 import createPlotlyComponent from "react-plotly.js/factory";
@@ -49,14 +49,16 @@ class LineChart extends React.Component {
 
     const minY2 = Math.round(this.getMinOfArray(this.props.yDataRight) - 1);
     const maxY2 = Math.round(this.getMaxOfArray(this.props.yDataRight) + 1);
+  
     const text = this.props.xData.map(v => formatDate(v));
     const xVals = this.props.xData.map(v => new Date(v + 'Z').getTime());
+    const xValsWithGaps = insertGaps(xVals, 40000);
 
     this.setState({
       minY1: minY1,
       maxY1: maxY1,
       text: text,
-      xVals: xVals,
+      xVals: xValsWithGaps,
       loading: false,
       options: {
         color: '#FFF',
@@ -140,6 +142,7 @@ class LineChart extends React.Component {
           mode: 'lines',
           hovertemplate: this.props.hoverTemplateRight,
           text: this.state.text,
+          type: 'scatter',
           connectgaps: false,
         },
       ]
