@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import {isTimestampMoreThan1HourAgo, formatDate} from '../utils/date-time-utils';
+import { isTimestampMoreThan1HourAgo, formatDateTime } from '../utils/date-time-utils';
+import  { formatNumberForLanguage } from '../utils/format-utils';
 
 class Card extends Component {
   constructor(props) {
@@ -25,7 +26,7 @@ class Card extends Component {
             <div className="card-content white-text">
               <span className="card-span">{this.props.title ? this.props.title : "Title"}</span>
               {this.lastReadingWarning() ? <span className="card-warning-icon"><i className="material-icons yellow-text">warning</i></span> : null}
-              <span className="card-title">{this.props.temperature !== null || this.props.temperature !== undefined ? this.props.temperature.toFixed(1) + "\u00b0C" : "Temperature Error"}</span>
+              <span className="card-title">{this.props.temperature !== null || this.props.temperature !== undefined ? formatNumberForLanguage(this.props.temperature, navigator.language, 1) + "\u00b0C" : "Temperature Error"}</span>
               <div className={`card-humidity-battery`}>
                 <p className="card-span">{this.props.humidity !== undefined && this.props.humidity > 0 ? this.props.humidity + "%" : ""}</p>
                   <div className={`battery card-battery-icon ${this.props.battery ? "" : "card-battery-hidden"}`}>
@@ -35,7 +36,7 @@ class Card extends Component {
               </div>
               <div className="divider"></div>
               <span className={`card-span ${this.lastReadingWarning() && "red-text"}`}>
-                {this.props.date ? formatDate(this.props.date) : "Date Error"}
+                {this.props.date ? formatDateTime(this.props.date) : "Date Error"}
               </span>
             </div>
           </div>

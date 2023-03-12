@@ -29,7 +29,7 @@
   }
 
     /**
-   * Format date and time to match user locale
+   * Format date to match user locale
    * @param {Date | string} date - Date object or ISO 8601 date time string
    * @returns {string | null} Formatted date and time as a string or null if an invalid date is passed
    */
@@ -44,8 +44,31 @@
       dateTime = new Date(date).getTime();
     }
     
-    return new Intl.DateTimeFormat([locale, 'en-GB'], { dateStyle: 'short', timeStyle: 'long', hour12: false }).format(dateTime);
+    return new Intl.DateTimeFormat([locale, 'en-GB'], { dateStyle: 'short' }).format(dateTime);
   };
+
+  /**
+   * Format date and time to match user locale
+   * @param {Date | string} date - Date object or ISO 8601 date time string
+   * @returns {string | null} Formatted date and time as a string or null if an invalid date is passed
+   */
+      export const formatDateTime = (date) => {
+        if (!date) return null;
+        // Get user locale from browser
+        const locale = navigator.language;
+        let dateTime = null;
+        if (typeof date !== Object) {
+          dateTime = new Date(date + 'Z');
+        } else {
+          dateTime = new Date(date);
+        }
+        
+        const formattedDateString = new Intl.DateTimeFormat([locale, 'en-GB'], { dateStyle: 'short' }).format(dateTime.getTime());
+        const formattedTimeString = dateTime.toTimeString().split(' ')[0];
+
+
+        return `${formattedDateString} ${formattedTimeString}`;
+      };
 
   /**
    * Converts a Date object to a date string
@@ -80,15 +103,16 @@
    */
   export const formatTime = (date) => {
     if (!date) return null;
-    const locale = navigator.language;
     let dateTime = null;
     if (typeof date !== Object) {
-      dateTime = new Date(date + 'Z').getTime();
+      dateTime = new Date(date + 'Z');
     } else {
-      dateTime = new Date(date).getTime();
+      dateTime = new Date(date);
     }
 
-    return new Intl.DateTimeFormat([locale, 'en-GB'], { timeStyle: 'long', hour12: false }).format(dateTime);
+    //return new Intl.DateTimeFormat([locale, 'en-GB'], { timeStyle: 'long', hour12: false }).format(dateTime);
+    // new Date("2022-03-27 02:01").toTimeString() -> "02:01:00 GMT+0100 (British Summer Time)"
+    return dateTime.toTimeString().split(' ')[0];
   };
 
   /**
