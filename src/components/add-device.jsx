@@ -1,5 +1,5 @@
 import React from 'react';
-import M from 'materialize-css/dist/js/materialize.min.js';
+import M from '@materializecss/materialize/dist/js/materialize.min.js';
 import { isInputValid } from '../utils/input-validation';
 import { getDevices, addDevice } from '../utils/device';
 

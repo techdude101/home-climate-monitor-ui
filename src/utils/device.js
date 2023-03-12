@@ -14,13 +14,13 @@ export const addDevice = async (serial, description, key) => {
     'X-API-KEY': key
   }
   try {
-    return await axios.post(url, { serial: serial, description: description }, { headers: headers }, { timeout: 10_000 });
+    return await axios.post(url, { serial: serial, description: description }, { headers: headers }, { timeout: 10000 });
   } catch {
     return "Error";
   }
 };
 
-export async function fetchData(url, timeout=10_000) {
+export async function fetchData(url, timeout=10000) {
   try {
     return await axios({
       method: 'get',
