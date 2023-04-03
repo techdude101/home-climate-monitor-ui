@@ -1,23 +1,13 @@
 {
   "files": {
-    "main.css": "/home-climate-monitor-ui/static/css/main.7cb4d932.chunk.css",
-    "main.js": "/home-climate-monitor-ui/static/js/main.ea0144ea.chunk.js",
-    "main.js.map": "/home-climate-monitor-ui/static/js/main.ea0144ea.chunk.js.map",
-    "runtime-main.js": "/home-climate-monitor-ui/static/js/runtime-main.de6de2f9.js",
-    "runtime-main.js.map": "/home-climate-monitor-ui/static/js/runtime-main.de6de2f9.js.map",
-    "static/css/2.0e29fb61.chunk.css": "/home-climate-monitor-ui/static/css/2.0e29fb61.chunk.css",
-    "static/js/2.a91ee5a4.chunk.js": "/home-climate-monitor-ui/static/js/2.a91ee5a4.chunk.js",
-    "static/js/2.a91ee5a4.chunk.js.map": "/home-climate-monitor-ui/static/js/2.a91ee5a4.chunk.js.map",
+    "main.css": "/home-climate-monitor-ui/static/css/main.af628a22.css",
+    "main.js": "/home-climate-monitor-ui/static/js/main.d87ee05b.js",
     "index.html": "/home-climate-monitor-ui/index.html",
-    "static/css/2.0e29fb61.chunk.css.map": "/home-climate-monitor-ui/static/css/2.0e29fb61.chunk.css.map",
-    "static/css/main.7cb4d932.chunk.css.map": "/home-climate-monitor-ui/static/css/main.7cb4d932.chunk.css.map",
-    "static/js/2.a91ee5a4.chunk.js.LICENSE.txt": "/home-climate-monitor-ui/static/js/2.a91ee5a4.chunk.js.LICENSE.txt"
+    "main.af628a22.css.map": "/home-climate-monitor-ui/static/css/main.af628a22.css.map",
+    "main.d87ee05b.js.map": "/home-climate-monitor-ui/static/js/main.d87ee05b.js.map"
   },
   "entrypoints": [
-    "static/js/runtime-main.de6de2f9.js",
-    "static/css/2.0e29fb61.chunk.css",
-    "static/js/2.a91ee5a4.chunk.js",
-    "static/css/main.7cb4d932.chunk.css",
-    "static/js/main.ea0144ea.chunk.js"
+    "static/css/main.af628a22.css",
+    "static/js/main.d87ee05b.js"
   ]
 }
