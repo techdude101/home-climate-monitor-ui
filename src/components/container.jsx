@@ -76,7 +76,7 @@ class Container extends Component {
       
       let data = null;
       if (isToday(this.state.selected_date)) {
-        data = await this.getDataLast24Hours(new_selected_device.serial);
+        data = await this.getDataLast24Hours(new_selected_device.serial, 7);
       } else {
         data = await this.getData24Hours(new_selected_device.serial, this.selected_date);
       }
@@ -89,17 +89,23 @@ class Container extends Component {
     }
   }
 
-  async getDataLast24Hours(serial) {
+  async getDataLast24Hours(serial, startHour) {
     if (serial === undefined) return;
     if (serial == null) return;
 
-    let start_date = new Date();
-    start_date.setDate(start_date.getDate() - 1);
+    if (startHour === undefined) return;
+    if (startHour == null) return;
+
+    let startDate = new Date();
+    startDate.setDate(startDate.getDate() - 1);
+    startDate.setHours(startHour);
+    startDate.setMinutes(0);
+    startDate.setSeconds(0);
 
     let end_date = new Date();
     end_date.setDate(end_date.getDate() + 1);
 
-    return getData(serial, start_date.toISOString(), end_date.toISOString());
+    return getData(serial, startDate.toISOString(), end_date.toISOString());
   }
 
   async getData24Hours(serial, startDate) {
@@ -107,6 +113,10 @@ class Container extends Component {
     if (serial == null) return;
     if (startDate === undefined) return;
     if (startDate === null) return;
+
+    startDate.setHours(0);
+    startDate.setMinutes(0);
+    startDate.setSeconds(0);
 
     let end_date = new Date(startDate);
     end_date.setDate(startDate.getDate() + 1);
@@ -131,7 +141,7 @@ class Container extends Component {
       })
      
       if (this.state.selected_device !== undefined) {
-        const data = await this.getDataLast24Hours(this.state.selected_device.serial);
+        const data = await this.getDataLast24Hours(this.state.selected_device.serial, 7);
         if (data !== undefined) {
           this.setState({ device_data: data });
         }
