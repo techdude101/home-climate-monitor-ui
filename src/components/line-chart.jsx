@@ -30,11 +30,11 @@ class LineChart extends React.Component {
   }
 
   getTickVals() {
-    return this.state.reducedXVals.map(v => new Date(v).getTime().toString());
+    return this.state.reducedXVals.map(v => new Date(v + "Z").getTime());
   }
 
   getTextVals() {
-    return this.state.reducedXVals.map(v => formatTime(v));
+    return this.state.reducedXVals.map(v => formatTime(v).toString());
   }
 
   getMinOfArray(numArray) {
@@ -53,13 +53,18 @@ class LineChart extends React.Component {
     const maxY2 = Math.round(this.getMaxOfArray(this.props.yDataRight) + 1);
   
     const text = this.props.xData.map(v => formatDateTime(v));
-    const xVals = this.props.xData.map(v => new Date(v + 'Z').getTime());
-    const xValsWithGaps = insertGaps(xVals, 40000);
+    const xVals = this.props.xData.map(v => new Date(v + "Z").getTime());
+    const result = insertGaps(xVals, text, 40000);
+    
+    const xValsWithGaps = result[0];
+    const textValuesWithGaps = result[1];
+    xValsWithGaps.reverse();
+    textValuesWithGaps.reverse();
 
     this.setState({
       minY1: minY1,
       maxY1: maxY1,
-      text: text,
+      text: textValuesWithGaps,
       xVals: xValsWithGaps,
       loading: false,
       options: {
@@ -193,7 +198,8 @@ class LineChart extends React.Component {
           xaxis: {
             type: "linear",
             title: { text: 'Date/Time' },
-            autorange: true,
+            autorange: false,
+            range: [this.state.xVals[0], this.state.xVals[this.state.xVals.length - 1] + (1000 * 60 * 5)],
             tickmode: "array",
             tickvals: this.getTickVals(),
             ticktext: this.getTextVals(),
