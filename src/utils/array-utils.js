@@ -1,3 +1,11 @@
+export const getMinOfArray = (numArray) => {
+  return Math.min.apply(null, numArray);
+}
+
+export const getMaxOfArray = (numArray) => {
+  return Math.max.apply(null, numArray);
+}
+
 export const getFirstAndLastInArray = (arr) => {
   if ((arr === undefined) || (arr === null)) return null;
   const length = arr.length;

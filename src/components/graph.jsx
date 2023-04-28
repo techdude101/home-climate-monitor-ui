@@ -1,17 +1,35 @@
 import React, { Component } from 'react';
 
 import LineChart from './line-chart';
+import ErrorBoundary from './error-boundary';
+import { getMinOfArray, getMaxOfArray } from '../utils/array-utils';
 
 class Graph extends Component {
   constructor(props) {
     super(props)
     if (Array.isArray(this.props.data)) {
+      this.props.data.reverse();
       this.state = {
+        elementRef: React.createRef(),
+        displayed: false,
+        graphWidth: 600,
+        graphHeight: 600,
         data: this.props.data,
         temperatures: this.props.data.map(d => d.temperature),
         humidity: this.props.data.map(d => d.humidity),
         timestamps: this.props.data.map(d => d.timestamp)
       }
+    }
+  }
+
+  componentDidMount() {
+    if (this.state.elementRef.current) {
+      console.log(this.state.elementRef.current.getBoundingClientRect().width);
+      this.setState({
+        graphWidth: Math.floor(this.state.elementRef.current.getBoundingClientRect().width),
+        graphHeight: window.screen.height / 3,
+        displayed: true,
+      })
     }
   }
 
@@ -23,7 +41,9 @@ class Graph extends Component {
       this.setState({
         temperatures: temperatures,
         humidity: humidity,
-        timestamps: timestamps
+        timestamps: timestamps,
+        graphWidth: Math.floor(this.state.elementRef.current.getBoundingClientRect().width),
+        graphHeight: window.screen.height / 3
       })
     }
   }
@@ -33,42 +53,61 @@ class Graph extends Component {
     // Temperature only
     if (this.state.humidity === null || this.state.humidity[0] === 0) {
       return <LineChart
-      labelLeft="Temperature (℃)"
+      graphWidth={this.state.graphWidth}
+      graphHeight={this.state.graphHeight}
+      label="Temperature (℃)"
       xData={this.state.timestamps}
-      yDataLeft={this.state.temperatures}
+      yData={this.state.temperatures}
       axisNameLeft="Temperature"
-      hoverTemplateLeft='%{text}<br>%{y:.1f}&deg;C<extra></extra>'
-      title={" "} 
+      decimalPlaces={1}
+      range={[getMinOfArray(this.state.temperatures) - 1, getMaxOfArray(this.state.temperatures) + 1]}
+      title={"Temperature (℃)"} 
       />  
     }
     // Temperature and humidity
-    return <LineChart
-    labelLeft="Temperature (℃)"
-    labelRight="Humidity (%)"
+    return <>
+    <LineChart
+    graphWidth={this.state.graphWidth}
+    graphHeight={this.state.graphHeight}
+    label="Temperature (℃)"
     xData={this.state.timestamps}
-    yDataLeft={this.state.temperatures}
-    yDataRight={this.state.humidity}
+    yData={this.state.temperatures}
     axisNameLeft="Temperature"
-    axisNameRight="Humidity"
-    hoverTemplateLeft='%{text}<br>%{y:.1f}&deg;C<extra></extra>'
-    hoverTemplateRight='%{text}<br>%{y:.0f}%<extra></extra>'
-    title={" "} />
+    decimalPlaces={1}
+    range={[getMinOfArray(this.state.temperatures) - 1, getMaxOfArray(this.state.temperatures) + 1]}
+    title={"Temperature (℃)"} />
+    <hr />
+    <LineChart
+    graphWidth={this.state.graphWidth}
+    graphHeight={this.state.graphHeight}
+    label="Humidity (%)"
+    xData={this.state.timestamps}
+    yData={this.state.humidity}
+    axisNameLeft="Humidity"
+    decimalPlaces={0}
+    range={[0,100]}
+    title={"Humidity (%)"} />
+    </>
   }
 
   render() {
     return (
-      <div className="row">
+      <>
+      <div className="row white-text center-align">
+      <ErrorBoundary message="Error loading graphs :-(">
         <div className="col s12 m12 l12">
-          <div className="card blue-grey darken-1">
-            <div className="card-title white-text center-align">
+          <div className="card">
+            <div className="card-title black-text center-align">
               {this.props.title}
             </div>
-            <div className="card-content white-text">
-            {this.displayChart()}
+            <div className="card-content black-text" ref={this.state.elementRef}>
+            {this.state.displayed ? this.displayChart() : ""}
             </div>
           </div>
         </div>
+      </ErrorBoundary>
       </div>
+      </>
     );
   }
 }

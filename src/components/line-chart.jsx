@@ -1,12 +1,8 @@
 import React from 'react';
-import Plotly from "plotly.js-basic-dist";
-import * as frDictionary from "plotly.js/lib/locales/fr";
-import * as deDictionary from "plotly.js/lib/locales/de";
-import { formatTime, formatDateTime, insertGaps } from '../utils/date-time-utils';
-import { getNelementsEvenlySpaced } from '../utils/array-utils';
+import uPlot from 'uplot';
+import UplotReact from 'uplot-react';
 
-import createPlotlyComponent from "react-plotly.js/factory";
-const Plot = createPlotlyComponent(Plotly);
+import "uplot/dist/uPlot.min.css";
 
 class LineChart extends React.Component {
   constructor(props) {
@@ -14,208 +10,65 @@ class LineChart extends React.Component {
     this.state = {
       labels: [],
       label: null,
-      xData: [],
-      yData: [],
+      xData: this.props.xData.map(v => Math.round(new Date(v + "Z").getTime() / 1000)).reverse(),
+      yData: this.props.yData.map(v => v).reverse(),
       dateData: [],
       chartData: {},
-      options: {},
+      options: {
+        title: this.props.title,
+        width: this.props.graphWidth - 50,
+        height: this.props.graphHeight,
+        mode: 1,
+        tzDate: ts => uPlot.tzDate(new Date(ts * 1e3), Intl.DateTimeFormat().resolvedOptions().timeZone),
+        cursor: {
+          x: true,
+          y: false,
+        },
+        scales: {
+          y: {
+            range: this.props.range
+          }
+        },
+        series: [
+          {
+            value: `{DD}-{MM}-{YY} {HH}:{mm}:{ss}`
+          },
+          {
+            label: this.props.labelLeft,
+            points: { show: false },
+            stroke: "green",
+            value: (u, v) => v == null ? null : v.toFixed(this.props.decimalPlaces),
+          }
+        ],
+        axes: [
+          {},
+          {
+            label: this.props.labelLeft
+          }
+        ]
+      },
       text: null,
-      reducedXVals: this.reduceXDataForTicks(),
       loading: true,
     }
   }
 
-  reduceXDataForTicks() {
-    return getNelementsEvenlySpaced(this.props.xData, 4);
-  }
-
-  getTickVals() {
-    return this.state.reducedXVals.map(v => new Date(v + "Z").getTime());
-  }
-
-  getTextVals() {
-    return this.state.reducedXVals.map(v => formatTime(v).toString());
-  }
-
-  getMinOfArray(numArray) {
-    return Math.min.apply(null, numArray);
-  }
-
-  getMaxOfArray(numArray) {
-    return Math.max.apply(null, numArray);
-  }
-
   componentDidMount() {
-    const minY1 = Math.round(this.getMinOfArray(this.props.yDataLeft) - 1);
-    const maxY1 = Math.round(this.getMaxOfArray(this.props.yDataLeft) + 1);
-
-    const minY2 = Math.round(this.getMinOfArray(this.props.yDataRight) - 1);
-    const maxY2 = Math.round(this.getMaxOfArray(this.props.yDataRight) + 1);
-  
-    const text = this.props.xData.map(v => formatDateTime(v));
-    const xVals = this.props.xData.map(v => new Date(v + "Z").getTime());
-    const result = insertGaps(xVals, text, 40000);
-    
-    const xValsWithGaps = result[0];
-    const textValuesWithGaps = result[1];
-    xValsWithGaps.reverse();
-    textValuesWithGaps.reverse();
-
     this.setState({
-      minY1: minY1,
-      maxY1: maxY1,
-      text: textValuesWithGaps,
-      xVals: xValsWithGaps,
       loading: false,
-      options: {
-        color: '#FFF',
-        elements: {
-          point: { radius: 0 }
-        },
-        responsive: true,
-        scales: {
-          y: {
-            type: 'linear',
-            position: 'left',
-            grid: {
-              color: 'rgba(255, 255, 255, 0.1)',
-            },
-            min: minY1,
-            max: maxY1,
-            ticks: {
-              display: true,
-              stepSize: 0.5,
-              color: 'rgba(255, 255, 255, 0.7)',
-            }
-          },
-          y1: {
-            type: 'linear',
-            position: 'right',
-            grid: {
-              drawOnChartArea: false, // only want the grid lines for one axis to show up
-            },
-            min: minY2,
-            max: maxY2,
-            ticks: {
-              display: true,
-              stepSize: 1,
-              color: 'rgba(255, 255, 255, 0.7)',
-            }
-          },
-          x: {
-            grid: {
-              color: 'rgba(255, 255, 255, 0.1)',
-            },
-            ticks: {
-              display: true,
-              color: 'rgba(255, 255, 255, 0.7)',
-            }
-          }
-        },
-      },
     });
   }
 
-  componentDidUpdate(previousProps, previousState) {
-    if (previousProps.yDataLeft !== this.props.yDataLeft) {
-      const minY1 = Math.floor(this.getMinOfArray(this.props.yDataLeft));
-      const maxY1 = Math.ceil(this.getMaxOfArray(this.props.yDataLeft));
-      
-      this.setState({
-        minY1: minY1,
-        maxY1: maxY1,
-      })
-    }
-  }
-  
   render() {
-    let data = []
-    if (this.props.yDataRight) {
-      data = [
-        {
-          x: this.state.xVals,
-          y: this.props.yDataLeft,
-          name: this.props.axisNameLeft,
-          mode: 'lines',
-          hovertemplate: this.props.hoverTemplateLeft,
-          text: this.state.text,
-          type: 'scatter',
-          connectgaps: false,
-        },
-        {
-          x: this.state.xVals,
-          y: this.props.yDataRight,
-          yaxis: "y2",
-          name: this.props.axisNameRight,
-          mode: 'lines',
-          hovertemplate: this.props.hoverTemplateRight,
-          text: this.state.text,
-          type: 'scatter',
-          connectgaps: false,
-        },
-      ]
-    } else {
-      data = [
-        {
-          x: this.state.xVals,
-          y: this.props.yDataLeft,
-          name: this.props.axisNameLeft,
-          mode: 'lines',
-          hovertemplate: this.props.hoverTemplateLeft,
-          text: this.state.text,
-          connectgaps: false,
-        }
-      ]
-    }
-
     const loading = this.state.loading;
     return (
       <div>
-      {loading ? <p>Loading...</p> : 
-      <Plot
-        data={data}
-        config={{
-          locales: { 'fr': frDictionary, 'de' : deDictionary },
-          locale: navigator.language
-        }}
-        layout={{
-          margin: {
-            t: 90,
-            b: 90,
-            l: 70,
-            r: 70,
-            pad: 10
-          },
-
-          autosize: true,
-          legend: {
-            orientation: "h",
-            yanchor: "bottom",
-            y: 1.12,
-            xanchor: "right",
-            x: 1,
-          },
-          xaxis: {
-            type: "linear",
-            title: { text: 'Date/Time' },
-            autorange: false,
-            range: [this.state.xVals[0], this.state.xVals[this.state.xVals.length - 1] + (1000 * 60 * 5)],
-            tickmode: "array",
-            tickvals: this.getTickVals(),
-            ticktext: this.getTextVals(),
-          },
-          yaxis: { title: this.props.labelLeft, automargin: true, range: [this.state.minY1, this.state.maxY1] },
-          yaxis2: {
-            title: this.props.labelRight,
-            range: [0, 100],
-            overlaying: 'y',
-            side: 'right',
-            automargin: true,
-          },
-        }}
-        useResizeHandler={true}
-        style={{ maxWidth: "100%", height: "100%" }}
-      />}
+        {loading ? <p>Loading...</p> :
+          <UplotReact
+            options={this.state.options}
+            data={[this.state.xData, this.state.yData]}
+            onCreate={(chart) => { }}
+            onDelete={(chart) => { }}
+          />}
       </div>
     )
   }

@@ -138,7 +138,7 @@ export const insertGaps = (timestamps, text, delta) => {
   let timestampsCopy = [...timestamps];
   let textValues = [...text];
 
-  for (let index = 1; index < timestamps.length; index++) {
+  for (let index = 2; index < timestamps.length; index++) {
     if (Math.abs(timestamps[index] - timestamps[index - 1]) > delta) {
       timestampsCopy.splice(index - 1, 0, null);
       textValues.splice(index - 1, 0, null);
