@@ -221,7 +221,7 @@ class Container extends Component {
                 }} />
               <ul>
                 {this.state.devices != null ? this.state.devices.map(device => {
-                  return <li key={device.serial}><button onClick={this.handleChangeDevice} className="waves-effect waves-light btn grey darken-2 sidebar-links">{device.description}</button></li>
+                  return <li key={device.serial}><button onClick={this.handleChangeDevice} className="truncate waves-effect waves-light btn grey darken-2 sidebar-links">{device.description}</button></li>
                 }) : null}
                 <div className="divider"></div>
                 <li><button className="waves-effect waves-light btn green darken-4 sidebar-links"
