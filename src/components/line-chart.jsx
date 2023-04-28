@@ -13,8 +13,8 @@ class LineChart extends React.Component {
     this.state = {
       labels: [],
       label: null,
-      xData: this.props.xData.slice(0).reverse().map(v => Math.round(new Date(v + "Z").getTime() / 1000)),
-      yData: this.props.yData.slice(0).reverse().map(v => v),
+      xData: this.props.xData.map(v => new Date(v + "Z").getTime() / 1000),
+      yData: this.props.yData,
       dateData: [],
       chartData: {},
       options: {
@@ -81,7 +81,7 @@ class LineChart extends React.Component {
     }
   }
 
-  componentDidMount() {
+  componentDidMount() {    
     this.setState({
       loading: false,
     });

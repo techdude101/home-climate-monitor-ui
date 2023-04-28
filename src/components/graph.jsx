@@ -8,16 +8,15 @@ class Graph extends Component {
   constructor(props) {
     super(props)
     if (Array.isArray(this.props.data)) {
-      this.props.data.reverse();
       this.state = {
         elementRef: React.createRef(),
         displayed: false,
         graphWidth: 600,
         graphHeight: 600,
         data: this.props.data,
-        temperatures: this.props.data.map(d => d.temperature),
-        humidity: this.props.data.map(d => d.humidity),
-        timestamps: this.props.data.map(d => d.timestamp)
+        temperatures: this.props.data.map(d => d.temperature).reverse(),
+        humidity: this.props.data.map(d => d.humidity).reverse(),
+        timestamps: this.props.data.map(d => d.timestamp).reverse()
       }
     }
   }
