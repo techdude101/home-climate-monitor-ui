@@ -67,7 +67,7 @@ export const formatDateTime = (date) => {
   // Get user locale from browser
   const locale = navigator.language;
   let dateTime = null;
-  if (typeof date !== Object && typeof date === String) {
+  if (typeof date !== Object && typeof date === "string") {
     dateTime = new Date(date + "Z");
   } else {
     dateTime = new Date(date);
