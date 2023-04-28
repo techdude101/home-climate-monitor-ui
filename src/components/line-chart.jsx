@@ -34,11 +34,37 @@ class LineChart extends React.Component {
             value: `{DD}-{MM}-{YY} {HH}:{mm}:{ss}`
           },
           {
-            label: this.props.labelLeft,
+            label: this.props.label,
             points: { show: false },
             stroke: "green",
             value: (u, v) => v == null ? null : v.toFixed(this.props.decimalPlaces),
-          }
+            spanGaps: false,
+            gaps: (u, sidx, idx0, idx1, nullGaps) => {
+              const isNum = Number.isFinite;
+			        const delta = (60 * 2);
+							let xData = u.data[0];
+							let yData = u.data[sidx];
+
+							let addlGaps = [];
+
+							for (let i = idx0 + 1; i <= idx1; i++) {
+								if (isNum(yData[i]) && isNum(yData[i-1])) {
+									if (xData[i] - xData[i - 1] > delta) {
+										uPlot.addGap(
+											addlGaps,
+											Math.round(u.valToPos(xData[i - 1], 'x', true)),
+											Math.round(u.valToPos(xData[i],     'x', true)),
+										);
+									}
+								}
+							}
+
+							nullGaps.push(...addlGaps);
+							nullGaps.sort((a, b) => a[0] - b[0]);
+
+							return nullGaps;
+						}
+					},
         ],
         axes: [
           {},
