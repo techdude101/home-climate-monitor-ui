@@ -2,6 +2,9 @@ import React from 'react';
 import uPlot from 'uplot';
 import UplotReact from 'uplot-react';
 
+import  { formatNumberForLanguage } from '../utils/format-utils';
+import { formatDateTime } from '../utils/date-time-utils';
+
 import "uplot/dist/uPlot.min.css";
 
 class LineChart extends React.Component {
@@ -31,13 +34,13 @@ class LineChart extends React.Component {
         },
         series: [
           {
-            value: `{DD}-{MM}-{YY} {HH}:{mm}:{ss}`
+            value: (u, v) => v == null ? null : formatDateTime(new Date(v * 1000))
           },
           {
             label: this.props.label,
             points: { show: false },
             stroke: "green",
-            value: (u, v) => v == null ? null : v.toFixed(this.props.decimalPlaces),
+            value: (u, v) => v == null ? null : formatNumberForLanguage(v, navigator.language, this.props.decimalPlaces),
             spanGaps: false,
             gaps: (u, sidx, idx0, idx1, nullGaps) => {
               const isNum = Number.isFinite;

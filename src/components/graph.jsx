@@ -24,7 +24,6 @@ class Graph extends Component {
 
   componentDidMount() {
     if (this.state.elementRef.current) {
-      console.log(this.state.elementRef.current.getBoundingClientRect().width);
       this.setState({
         graphWidth: Math.floor(this.state.elementRef.current.getBoundingClientRect().width),
         graphHeight: window.screen.height / 3,
