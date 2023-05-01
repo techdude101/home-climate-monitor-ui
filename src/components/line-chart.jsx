@@ -70,7 +70,18 @@ class LineChart extends React.Component {
 					},
         ],
         axes: [
-          {},
+          {
+            values: [
+              // tick incr          default           year                             month    day                        hour     min                sec       mode
+                [3600 * 24 * 365,   "{YYYY}",         null,                            null,    null,                      null,    null,              null,        1],
+                [3600 * 24 * 28,    "{MMM}",          "\n{YYYY}",                      null,    null,                      null,    null,              null,        1],
+                [3600 * 24,         "{DD}/{MM}/{YY}",        "\n{YYYY}",                      null,    null,                      null,    null,              null,        1],
+                [3600,              "{HH}:{mm}",        "\n{DD}/{MM}/{YY}",                null,    "\n{DD}/{MM}/{YY}",               null,    null,              null,        1],
+                [60,                "{HH}:{mm}",   "\n{DD}/{MM}/{YY}",                null,    "\n{DD}/{MM}",               null,    null,              null,        1],
+                [1,                 "{mm}:{ss}",          "\n{DD}/{MM}/{YY} {HH}:{mm}",   null,    "\n{D}/{M} {HH}:{mm}",  null,    "\n{HH}:{mm}",  null,        1],
+                [0.001,             "{mm}:{ss}.{fff}",    "\n{DD}/{MM}/{YY} {HH}:{mm}",   null,    "\n{D}/{M} {HH}:{mm}",  null,    "\n{HH}:{mm}",  null,        1],
+              ],
+          },
           {
             label: this.props.labelLeft
           }
