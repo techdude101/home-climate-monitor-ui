@@ -20,7 +20,7 @@ class Card extends Component {
 
   render() {
     return (
-      <div className="col s12 m5 l3">
+      <div aria-hidden={true} className="col s12 m5 l3">
         <div className={`card card-pointer blue-grey ${this.props.selected ? "darken-3" : "darken-4"}`} onClick={this.handleClick}>
           <div className={`card grey ${this.props.selected ? "darken-3" : "darken-4"}`}>
             <div className="card-content white-text">

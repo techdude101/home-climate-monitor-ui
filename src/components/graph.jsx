@@ -91,7 +91,7 @@ class Graph extends Component {
   render() {
     return (
       <>
-      <div className="row white-text center-align">
+      <div aria-hidden={true} className="row white-text center-align">
       <ErrorBoundary message="Error loading graphs :-(">
         <div className="col s12 m12 l12">
           <div className="card">

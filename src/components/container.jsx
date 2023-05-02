@@ -221,11 +221,11 @@ class Container extends Component {
                 }} />
               <ul>
                 {this.state.devices != null ? this.state.devices.map(device => {
-                  return <li key={device.serial}><button onClick={this.handleChangeDevice} className="truncate waves-effect waves-light btn grey darken-2 sidebar-links">{device.description}</button></li>
+                  return <li key={device.serial}><button onFocus={this.handleChangeDevice} onClick={this.handleChangeDevice} className="truncate waves-effect waves-light btn grey darken-2 sidebar-links">{device.description}</button></li>
                 }) : null}
                 <div className="divider"></div>
                 <li><button className="waves-effect waves-light btn green darken-4 sidebar-links"
-                  onClick={this.toggleAddDevice}>{this.state.add_device ? "Show Graphs" : "Add Device"}</button></li>
+                  onClick={this.toggleAddDevice} >{this.state.add_device ? "Show Graphs" : "Add Device"}</button></li>
               </ul>
             </div>
           </div>

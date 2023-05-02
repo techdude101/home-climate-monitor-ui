@@ -184,3 +184,9 @@
 .battery-level-alert {
   background-color: #e81309;
 }
+
+:focus {
+  /* margin-top: 2px;
+  margin-bottom: 2px; */
+  border: 1px solid white !important;
+}
