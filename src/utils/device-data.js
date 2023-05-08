@@ -21,6 +21,7 @@ export async function fetchData(url, timeout=10000) {
       timeout: timeout,
     });
   } catch {
+    // TODO: Add better error handling
     return "Error";
   }
 }

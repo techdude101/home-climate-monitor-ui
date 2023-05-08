@@ -44,7 +44,7 @@ class LineChart extends React.Component {
             spanGaps: false,
             gaps: (u, sidx, idx0, idx1, nullGaps) => {
               const isNum = Number.isFinite;
-			        const delta = (60 * 2);
+			        const delta = (60 * 5);
 							let xData = u.data[0];
 							let yData = u.data[sidx];
 
