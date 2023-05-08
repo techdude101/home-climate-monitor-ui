@@ -1,7 +1,7 @@
 {
   "name": "home-climate-monitor",
   "homepage": "http://techdude101.github.io/home-climate-monitor-ui",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "dependencies": {
     "@materializecss/materialize": "^1.2.2",
