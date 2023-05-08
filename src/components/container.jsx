@@ -8,6 +8,7 @@ import { DatePicker } from "react-materialize";
 import Cards from './cards';
 import Graph from './graph';
 import AddDevice from './add-device';
+import Footer from './footer';
 
 import { getDevices } from '../utils/device'
 import { getLastReading, getData } from '../utils/device-data';
@@ -31,6 +32,24 @@ class Container extends Component {
     }
   }
 
+  getAppNameFromMetaTag = () => {
+    const appName = document.getElementById("data-app-name");
+    if (appName.hasAttribute("content")) {
+      return appName.content;
+    } else {
+      return null;
+    }
+  }
+
+  getAppVersionFromMetaTag = () => {
+    const appVersion = document.getElementById("data-app-version");
+    if (appVersion.hasAttribute("content")) {
+      return appVersion.content;
+    } else {
+      return null;
+    }
+  }
+
   handleBurger(e) {
     console.log("burger");
   }
@@ -38,7 +57,7 @@ class Container extends Component {
   async handleDateChange(e) {
     const value = e.target.value;
 
-    const newState = {...this.state}
+    const newState = { ...this.state }
     newState["selected_date"] = value;
     newState["loading"] = true;
     this.setState(newState);
@@ -53,9 +72,9 @@ class Container extends Component {
   async handleChangeDevice(e) {
     // If add device is visible change the display to show the graphs
     if (this.state.add_device) {
-      this.setState({add_device: false});
+      this.setState({ add_device: false });
     }
-    
+
     let device = null;
     if (e.hasOwnProperty('target')) {
       device = e.target.innerText.toLowerCase();
@@ -70,17 +89,17 @@ class Container extends Component {
     if (new_selected_device.length !== 0) {
       // Array.filter returns array - get first element in the array
       new_selected_device = new_selected_device[0];
-      const newState = {...this.state};
+      const newState = { ...this.state };
       newState["loading"] = true;
       this.setState(newState);
-      
+
       let data = null;
       if (isToday(this.state.selected_date)) {
         data = await this.getDataLast24Hours(new_selected_device.serial, 7);
       } else {
         data = await this.getData24Hours(new_selected_device.serial, this.selected_date);
       }
-      
+
       this.setState({
         selected_device: new_selected_device,
         device_data: data,
@@ -139,7 +158,7 @@ class Container extends Component {
       this.setState({
         last_readings: readings
       })
-     
+
       if (this.state.selected_device !== undefined) {
         const data = await this.getDataLast24Hours(this.state.selected_device.serial, 7);
         if (data !== undefined) {
@@ -232,11 +251,16 @@ class Container extends Component {
           <div className="col s12 m12 l10 blue-grey darken-2 min-height-100vh">
             {this.displayCards()}
             {this.state.add_device ?
-              <AddDevice handleCancel={this.toggleAddDevice}/>
+              <AddDevice handleCancel={this.toggleAddDevice} />
               :
               this.displayGraphs()
             }
           </div>
+          <div className="white-text text-center center">
+          <Footer
+            appName={this.getAppNameFromMetaTag()}
+            appVersion={this.getAppVersionFromMetaTag()} />
+        </div> {/* End of Footer*/}
         </div>
       </div>
     );
