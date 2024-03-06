@@ -48,6 +48,22 @@ class Graph extends Component {
 
   displayChart() {
     if (this.state === null) return "";
+    // Analog sensor stored as temperature
+    if (this.props.title.includes("VOC") && (this.state.humidity === null || this.state.humidity[0] === 0)) {
+      // Convert to VOC level (x10)
+      const vocLevels = this.state.temperatures.map(data => data * 10);
+      return <LineChart
+      graphWidth={this.state.graphWidth}
+      graphHeight={this.state.graphHeight}
+      label="VOC Level"
+      xData={this.state.timestamps}
+      yData={vocLevels}
+      axisNameLeft="VOC Level"
+      decimalPlaces={1}
+      range={[getMinOfArray(vocLevels) - 1, getMaxOfArray(vocLevels) + 1]}
+      title={"VOC Level"} 
+      />  
+    }
     // Temperature only
     if (this.state.humidity === null || this.state.humidity[0] === 0) {
       return <LineChart

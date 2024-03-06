@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import Card from './card';
+import CardAnalog from './card-analog';
 
 class Cards extends Component {
   constructor(props){
@@ -24,22 +25,42 @@ class Cards extends Component {
     return (dt.getTime() > twoDaysAgo);
   }
 
+  deviceHasAnalogSensor = (deviceDescription) => {
+    return deviceDescription.includes("VOC");
+  }
+
   deviceCard = () => {
     if (this.props.readings === null) return;
     if (this.props.readings[0] === undefined) return;
     if (this.props.devices === undefined) return;
+    
     return  this.props.readings.map((device) => {
-      if (device !== undefined && device[0] !== undefined && this.dateTimeIsWithinLast2Days(device[0].timestamp)) {
-      return <Card
-      key={device[0].serial}
-      title={this.getDeviceDescription(device[0].serial)}
-      humidity={device[0].humidity}
-      temperature={device[0].temperature}
-      battery={device[0].battery}
-      date={device[0].timestamp} 
-      clickHandler={this.clickHandler} 
-      selected={this.props.selectedDevice === this.getDeviceDescription(device[0].serial)} />
-      } else { return "" }
+      const deviceDataIsValid = (device !== undefined && device[0] !== undefined && this.dateTimeIsWithinLast2Days(device[0].timestamp));
+      const deviceDescription = this.getDeviceDescription(device[0].serial);
+      
+      if (deviceDataIsValid && this.deviceHasAnalogSensor(deviceDescription)) {
+        return <CardAnalog
+        key={device[0].serial}
+        title={deviceDescription}
+        humidity={device[0].humidity}
+        analogValue={device[0].temperature * 10}
+        battery={device[0].battery}
+        date={device[0].timestamp} 
+        clickHandler={this.clickHandler} 
+        selected={this.props.selectedDevice === deviceDescription} />
+      }
+      else if (deviceDataIsValid) {
+        return <Card
+        key={device[0].serial}
+        title={deviceDescription}
+        humidity={device[0].humidity}
+        temperature={device[0].temperature}
+        battery={device[0].battery}
+        date={device[0].timestamp} 
+        clickHandler={this.clickHandler} 
+        selected={this.props.selectedDevice === deviceDescription} />
+      }
+      else { return "" }
     });
   }
 
