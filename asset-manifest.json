@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/home-climate-monitor-ui/static/css/main.ad2512dd.css",
-    "main.js": "/home-climate-monitor-ui/static/js/main.c37e3b0b.js",
+    "main.js": "/home-climate-monitor-ui/static/js/main.bd443d7a.js",
     "index.html": "/home-climate-monitor-ui/index.html",
     "main.ad2512dd.css.map": "/home-climate-monitor-ui/static/css/main.ad2512dd.css.map",
-    "main.c37e3b0b.js.map": "/home-climate-monitor-ui/static/js/main.c37e3b0b.js.map"
+    "main.bd443d7a.js.map": "/home-climate-monitor-ui/static/js/main.bd443d7a.js.map"
   },
   "entrypoints": [
     "static/css/main.ad2512dd.css",
-    "static/js/main.c37e3b0b.js"
+    "static/js/main.bd443d7a.js"
   ]
 }
