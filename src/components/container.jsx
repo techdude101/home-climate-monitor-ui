@@ -21,6 +21,7 @@ class Container extends Component {
     this.handleBurger = this.handleBurger.bind(this);
     this.toggleAddDevice = this.toggleAddDevice.bind(this);
     this.displayGraphs = this.displayGraphs.bind(this);
+    this.updateDeviceData = this.updateDeviceData.bind(this);
     this.state = {
       devices: null,
       last_readings: [],
@@ -28,7 +29,9 @@ class Container extends Component {
       device_data: null,
       add_device: false,
       selected_date: new Date(),
-      loading: false
+      loading: false,
+      auto_refresh_interval_in_seconds: 30,
+      auto_refresh_interval_id: null
     }
   }
 
@@ -143,11 +146,29 @@ class Container extends Component {
     return getData(serial, startDate.toISOString(), end_date.toISOString());
   }
 
+  async updateDeviceData() {
+    this.setState({
+      loading: true
+    })
+    
+    const readings = await Promise.all(this.state.devices.map((device) => {
+      return getLastReading(device.serial);
+    }));
+    
+    this.setState({
+      last_readings: readings,
+      loading: false
+    })
+  }
+
   async componentDidMount() {
+    const intervalId = setInterval(this.updateDeviceData, this.state.auto_refresh_interval_in_seconds * 1000);
+
     const devices = await getDevices();
 
     this.setState({
-      devices: devices
+      devices: devices,
+      auto_refresh_interval_id: intervalId
     });
 
     if (this.state.devices !== undefined && this.state.devices !== null) {
@@ -166,6 +187,10 @@ class Container extends Component {
         }
       }
     }
+  }
+
+  async componentWillUnmount() {
+    clearInterval(this.state.auto_refresh_interval_id);
   }
 
   displayGraphs() {
